@@ -1,0 +1,29 @@
+<div class="layout layout--col gap--medium">
+  <div class="title_bar">
+    <span class="title">📚 Tingsaker – lekser</span>
+    <span class="instance">{{ week }}</span>
+  </div>
+
+  <div class="content">
+    <h2>{{ today_day }}{% if due %} · {{ due }}{% endif %}</h2>
+    {% if today_homework and today_homework != "" %}
+      <div class="value">{{ today_homework }}</div>
+    {% else %}
+      <div class="value">Ingen lekser oppført.</div>
+    {% endif %}
+
+    {% if note and note != "" %}
+      <div class="label">ℹ️ {{ note }}</div>
+    {% endif %}
+
+    {% if next_day and next_homework and next_homework != "" %}
+      <hr>
+      <h3>Neste</h3>
+      <div class="value">{{ next_day }}</div>
+      <div class="label">{{ next_homework }}</div>
+      {% if next_note and next_note != "" %}<div class="label">ℹ️ {{ next_note }}</div>{% endif %}
+    {% endif %}
+  </div>
+
+  <div class="label">Kilde: Tingsaker skole · Oppdatert {{ generated_at }}</div>
+</div>

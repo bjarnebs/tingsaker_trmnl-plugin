@@ -1,0 +1,7 @@
+<div class="layout layout--col gap--small">
+  <div class="title_bar"><span class="title">📚 Tingsaker</span><span class="instance">{{ week }}</span></div>
+  <h2>{{ today_day }}</h2>
+  <div class="value">{% if today_homework %}{{ today_homework }}{% else %}Ingen lekser oppført.{% endif %}</div>
+  {% if note and note != "" %}<div class="label">ℹ️ {{ note }}</div>{% endif %}
+  {% if next_day and next_homework %}<div class="label">Neste: {{ next_day }} – {{ next_homework }}</div>{% endif %}
+</div>

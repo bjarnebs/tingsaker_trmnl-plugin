@@ -1,0 +1,26 @@
+{
+  "version": "3.3.1",
+  "week": "uke 42",
+  "today_day": "tirsdag",
+  "today_homework": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
+  "next_day": "onsdag",
+  "next_homework": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør skriveoppgavene.",
+  "note": "",
+  "next_note": "Denne dagen blir annerledes på grunn av skoleløpet. Vi kommer derfor til å ha en fruktpause ca kl 9 og så spiser vi nista kl 10.50. Ta derfor med både mat og frukt. Alle elevene får også en banan som takk for innsatsen etter at de har løpt. Alle som vil er velkomne til å heie på oss når vi skal løpe. Vi i første klasse løper fra 9.30-9.55. I tillegg er dere velkomne til å være på skolens fellesmarkering av uka. Det skjer ute på asfalt-banen fra kl 11.30-11.50. Elevene blir med oss inn til klasserommet igjen etter samlingen for å avslutte der.",
+  "homework": {
+    "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
+    "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
+    "onsdag": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør skriveoppgavene.",
+    "torsdag": "Finn tre ting på b og tre ting på ø og vis dem til en voksen hjemme.",
+    "fredag": ""
+  },
+  "notes": {
+    "mandag": "",
+    "tirsdag": "",
+    "onsdag": "Denne dagen blir annerledes på grunn av skoleløpet. Vi kommer derfor til å ha en fruktpause ca kl 9 og så spiser vi nista kl 10.50. Ta derfor med både mat og frukt. Alle elevene får også en banan som takk for innsatsen etter at de har løpt. Alle som vil er velkomne til å heie på oss når vi skal løpe. Vi i første klasse løper fra 9.30-9.55. I tillegg er dere velkomne til å være på skolens fellesmarkering av uka. Det skjer ute på asfalt-banen fra kl 11.30-11.50. Elevene blir med oss inn til klasserommet igjen etter samlingen for å avslutte der.",
+    "torsdag": "",
+    "fredag": ""
+  },
+  "generated_at": "2026-10-20T21:16+02:00",
+  "source": "/mnt/data/build_v331/tests/fixtures/uke_42-solidaritetsuka.pdf"
+}

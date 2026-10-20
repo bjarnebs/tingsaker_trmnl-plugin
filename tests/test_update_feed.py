@@ -1,0 +1,105 @@
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).parents[1]
+FIXTURE = Path(__file__).parent / "fixtures" / "uke_42-solidaritetsuka.pdf"
+
+
+def run_fixture(tmp_path):
+    out = tmp_path / "data.json"
+    subprocess.run(
+        [sys.executable, str(ROOT / "update_feed.py"),
+         "--pdf", str(FIXTURE), "--week", "42", "--out", str(out)],
+        check=True,
+    )
+    return json.loads(out.read_text(encoding="utf-8"))
+
+
+def test_week42(tmp_path):
+    data = run_fixture(tmp_path)
+    hw = data["homework"]
+
+    assert "Les første side av leseleksa" in hw["mandag"]
+    assert "Les tegneserien tre ganger" in hw["tirsdag"]
+    assert "Gjør skriveoppgavene" in hw["onsdag"]
+    assert "tre ting på b" in hw["torsdag"]
+    assert hw["fredag"] == ""
+
+    assert "Ta derfor med både mat og frukt" in data["notes"]["onsdag"]
+    assert data["notes"]["mandag"] == ""
+    assert "Sponsorskjema" not in data["notes"]["onsdag"]
+    assert "due" not in data
+
+
+def test_variant_labels_are_supported():
+    from update_feed import extract_homework
+
+    text = """
+    DAG På skolen Lekse
+    Mandag Samling Lesebok 1: Les side 3.
+    Tirsdag Lekse Ukelekse: Øv på bokstavene.
+    Onsdag Stasjoner Ukeleksse: Les hjemme.
+    Torsdag Leksemappa: Les teksten.
+    Fredag Gym
+    """
+    hw = extract_homework(text)
+    assert hw["mandag"] == "Les side 3."
+    assert hw["tirsdag"] == "Øv på bokstavene."
+    assert hw["onsdag"] == "Les hjemme."
+    assert hw["torsdag"] == "Les teksten."
+    assert hw["fredag"] == ""
+
+
+def test_no_label_means_fail():
+    from update_feed import extract_homework
+
+    text = """
+    DAG På skolen Lekse
+    Mandag Samling Norsk
+    Tirsdag Lek Stasjoner
+    Onsdag Gym
+    Torsdag Kunst
+    Fredag Fellessamling
+    """
+    try:
+        extract_homework(text)
+    except ValueError as exc:
+        assert "eksplisitt leksemarkør" in str(exc)
+    else:
+        raise AssertionError("Parseren skal ikke gjette lekser")
+
+
+def test_week_selection_never_jumps_into_future():
+    from update_feed import choose_week
+
+    links = [
+        {"week": 41, "url": "41.pdf"},
+        {"week": 43, "url": "43.pdf"},
+        {"week": 44, "url": "44.pdf"},
+    ]
+    assert choose_week(links, 43)["week"] == 43
+    assert choose_week(links, 42)["week"] == 41
+
+
+def test_atomic_output_validation(tmp_path):
+    from update_feed import write_json_atomic
+
+    path = tmp_path / "data.json"
+    data = {
+        "version": "3.3.1",
+        "week": "uke 42",
+        "today_day": "mandag",
+        "today_homework": "",
+        "next_day": "",
+        "next_homework": "",
+        "note": "",
+        "next_note": "",
+        "homework": {d: "" for d in ["mandag","tirsdag","onsdag","torsdag","fredag"]},
+        "notes": {d: "" for d in ["mandag","tirsdag","onsdag","torsdag","fredag"]},
+        "generated_at": "2026-10-20T21:00+02:00",
+        "source": "test",
+    }
+    write_json_atomic(path, data)
+    assert json.loads(path.read_text())["version"] == "3.3.1"
