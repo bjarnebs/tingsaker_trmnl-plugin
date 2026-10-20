@@ -1,26 +1,26 @@
 {
   "version": "3.3.1",
-  "week": "uke 42",
+  "week": "uke 43",
   "today_day": "tirsdag",
-  "today_homework": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
+  "today_homework": "● Les oppgave 1 en gang ● Gjør oppgave 2 og 3",
   "next_day": "onsdag",
-  "next_homework": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør skriveoppgavene.",
+  "next_homework": "● Gjør oppgavene 4 og 5 ● Les gjennom oppgave 1,2 og 3 en gang til.",
   "note": "",
-  "next_note": "Denne dagen blir annerledes på grunn av skoleløpet. Vi kommer derfor til å ha en fruktpause ca kl 9 og så spiser vi nista kl 10.50. Ta derfor med både mat og frukt. Alle elevene får også en banan som takk for innsatsen etter at de har løpt. Alle som vil er velkomne til å heie på oss når vi skal løpe. Vi i første klasse løper fra 9.30-9.55. I tillegg er dere velkomne til å være på skolens fellesmarkering av uka. Det skjer ute på asfalt-banen fra kl 11.30-11.50. Elevene blir med oss inn til klasserommet igjen etter samlingen for å avslutte der.",
+  "next_note": "",
   "homework": {
-    "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
-    "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
-    "onsdag": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør skriveoppgavene.",
-    "torsdag": "Finn tre ting på b og tre ting på ø og vis dem til en voksen hjemme.",
+    "mandag": "● Les tre ganger gjennom oppgave 1",
+    "tirsdag": "● Les oppgave 1 en gang ● Gjør oppgave 2 og 3",
+    "onsdag": "● Gjør oppgavene 4 og 5 ● Les gjennom oppgave 1,2 og 3 en gang til.",
+    "torsdag": "Finn tre ting som har lydene v eller g i seg og vis dem til en voksen hjemme.",
     "fredag": ""
   },
   "notes": {
     "mandag": "",
     "tirsdag": "",
-    "onsdag": "Denne dagen blir annerledes på grunn av skoleløpet. Vi kommer derfor til å ha en fruktpause ca kl 9 og så spiser vi nista kl 10.50. Ta derfor med både mat og frukt. Alle elevene får også en banan som takk for innsatsen etter at de har løpt. Alle som vil er velkomne til å heie på oss når vi skal løpe. Vi i første klasse løper fra 9.30-9.55. I tillegg er dere velkomne til å være på skolens fellesmarkering av uka. Det skjer ute på asfalt-banen fra kl 11.30-11.50. Elevene blir med oss inn til klasserommet igjen etter samlingen for å avslutte der.",
+    "onsdag": "",
     "torsdag": "",
     "fredag": ""
   },
-  "generated_at": "2026-10-20T21:45+02:00",
-  "source": "https://www.tingsakerskole.no/files/2026/10/uke_42-solidaritetsuka.pdf"
+  "generated_at": "2026-10-20T21:58+02:00",
+  "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf"
 }
