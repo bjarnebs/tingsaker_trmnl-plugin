@@ -68,10 +68,10 @@ def archive_links(html: str) -> list[dict]:
             match = re.search(r"\buke[_ -]?(\d{1,2})\b", href, re.I)
 
         # Skolearkivet kan også ha en lenke som bare heter "43".
-        if not match and re.fullmatch(r"\d{1,2}", text):
-            number = int(text)
-            if 1 <= number <= 53:
-                match = re.match(r"\d{1,2}", text)
+if not match and re.fullmatch(r"\d{1,2}", text):
+    number = int(text)
+    if 1 <= number <= 53:
+        match = re.fullmatch(r"(\d{1,2})", text)
 
         if match:
             week = int(match.group(1))
