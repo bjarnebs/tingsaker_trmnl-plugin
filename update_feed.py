@@ -55,22 +55,42 @@ def fetch(url: str) -> bytes:
 def archive_links(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     found = []
+
     for anchor in soup.find_all("a", href=True):
         text = norm(anchor.get_text(" ", strip=True))
         href = urljoin(ARCHIVE_URL, anchor["href"])
+
+        # Først: uke-nummer i lenketeksten, f.eks. "Uke 43".
         match = re.search(r"\buke\s*(\d{1,2})\b", text, re.I)
+
+        # Deretter: uke-nummer i filnavnet eller URL-en.
         if not match:
             match = re.search(r"\buke[_ -]?(\d{1,2})\b", href, re.I)
+
+        # Skolearkivet kan også ha en lenke som bare heter "43".
+        if not match and re.fullmatch(r"\d{1,2}", text):
+            number = int(text)
+            if 1 <= number <= 53:
+                match = re.match(r"\d{1,2}", text)
+
         if match:
-            found.append({"week": int(match.group(1)), "text": text, "url": href})
+            week = int(match.group(1))
+            if 1 <= week <= 53:
+                found.append({
+                    "week": week,
+                    "text": text,
+                    "url": href,
+                })
 
     unique = []
     seen = set()
+
     for item in found:
         key = (item["week"], item["url"])
         if key not in seen:
             seen.add(key)
             unique.append(item)
+
     return unique
 
 
