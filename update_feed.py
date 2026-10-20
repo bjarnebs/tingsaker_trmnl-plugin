@@ -60,27 +60,24 @@ def archive_links(html: str) -> list[dict]:
         text = norm(anchor.get_text(" ", strip=True))
         href = urljoin(ARCHIVE_URL, anchor["href"])
 
-        # Først: uke-nummer i lenketeksten, f.eks. "Uke 43".
         match = re.search(r"\buke\s*(\d{1,2})\b", text, re.I)
 
-        # Deretter: uke-nummer i filnavnet eller URL-en.
         if not match:
             match = re.search(r"\buke[_ -]?(\d{1,2})\b", href, re.I)
 
-        # Skolearkivet kan også ha en lenke som bare heter "43".
-if not match and re.fullmatch(r"\d{1,2}", text):
-    number = int(text)
-    if 1 <= number <= 53:
-        match = re.fullmatch(r"(\d{1,2})", text)
-
         if match:
             week = int(match.group(1))
-            if 1 <= week <= 53:
-                found.append({
-                    "week": week,
-                    "text": text,
-                    "url": href,
-                })
+        elif re.fullmatch(r"\d{1,2}", text):
+            week = int(text)
+        else:
+            continue
+
+        if 1 <= week <= 53:
+            found.append({
+                "week": week,
+                "text": text,
+                "url": href,
+            })
 
     unique = []
     seen = set()
@@ -92,7 +89,6 @@ if not match and re.fullmatch(r"\d{1,2}", text):
             unique.append(item)
 
     return unique
-
 
 def choose_week(links: list[dict], current_week: int) -> dict:
     if not links:
