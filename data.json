@@ -1,10 +1,10 @@
 {
   "version": "3.3.1",
   "week": "uke 43",
-  "today_day": "onsdag",
-  "today_homework": "● Gjør oppgavene 4 og 5 ● Les gjennom oppgave 1,2 og 3 en gang til.",
-  "next_day": "torsdag",
-  "next_homework": "Finn tre ting som har lydene v eller g i seg og vis dem til en voksen hjemme.",
+  "today_day": "torsdag",
+  "today_homework": "Finn tre ting som har lydene v eller g i seg og vis dem til en voksen hjemme.",
+  "next_day": "mandag",
+  "next_homework": "● Les tre ganger gjennom oppgave 1",
   "note": "",
   "next_note": "",
   "homework": {
@@ -21,6 +21,6 @@
     "torsdag": "",
     "fredag": ""
   },
-  "generated_at": "2026-10-21T11:12+02:00",
+  "generated_at": "2026-10-22T07:45+02:00",
   "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf"
 }
