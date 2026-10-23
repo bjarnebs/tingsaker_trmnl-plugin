@@ -1,13 +1,13 @@
 <div class="layout layout--col gap--medium">
-  <div class="title_bar"><span class="title">📚 Tingsaker – lekser</span><span class="instance">{{ week }}</span></div>
+  <div class="title_bar"><span class="title">📚 Tingsaker – lekser</span><span class="instance">{{ grade_1.week }}</span></div>
   <div class="content">
-    <h2>1. trinn · {{ today_day }}</h2>
-    {% if today_homework and today_homework != "" %}<div class="value">{{ today_homework }}</div>{% else %}<div class="value">Ingen lekser oppført.</div>{% endif %}
-    {% if note and note != "" %}<div class="label">ℹ️ {{ note }}</div>{% endif %}
+    <h2>1. trinn · {{ grade_1.today_day }}</h2>
+    {% if grade_1.today_homework and grade_1.today_homework != "" %}<div class="value">{{ grade_1.today_homework }}</div>{% else %}<div class="value">Ingen lekser oppført.</div>{% endif %}
+    {% if grade_1.reminders[grade_1.today_day] and grade_1.reminders[grade_1.today_day] != "" %}<div class="label">ℹ️ {{ grade_1.reminders[grade_1.today_day] }}</div>{% endif %}
     <hr>
-    <h2>4B · {{ today_day }}</h2>
-    {% if grade_4b.homework[today_day] and grade_4b.homework[today_day] != "" %}<div class="value">Lekser: {{ grade_4b.homework[today_day] }}</div>{% else %}<div class="label">Lekser: Ingen oppført.</div>{% endif %}
-    {% if grade_4b.reminders[today_day] and grade_4b.reminders[today_day] != "" %}<div class="label">Husk: {{ grade_4b.reminders[today_day] }}</div>{% endif %}
+    <h2>4B · {{ grade_1.today_day }}</h2>
+    {% if grade_4b.homework[grade_4b.today_day] and grade_4b.homework[grade_4b.today_day] != "" %}<div class="value">Lekser: {{ grade_4b.homework[grade_4b.today_day] }}</div>{% else %}<div class="label">Lekser: Ingen oppført.</div>{% endif %}
+    {% if grade_4b.reminders[grade_4b.today_day] and grade_4b.reminders[grade_4b.today_day] != "" %}<div class="label">Husk: {{ grade_4b.reminders[grade_4b.today_day] }}</div>{% endif %}
   </div>
   <div class="label">Kilde: Tingsaker skole · Oppdatert {{ generated_at }}</div>
 </div>
