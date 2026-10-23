@@ -46,14 +46,15 @@ jobs:
           assert data["grade_4b"]["label"] == "4. klasse"
           assert "today_homework" in data["grade_4b"]
           assert "next_homework" in data["grade_4b"]
-          if data["today_day"] == "fredag":
-              assert data["next_day"] == "helg"
-              assert data["next_homework"] == ""
+          assert not ({"today_day", "today_homework", "next_day", "next_homework", "homework", "notes", "source"} & data.keys())
+          if data["grade_1"]["today_day"] == "fredag":
+              assert data["grade_1"]["next_day"] == "helg"
+              assert data["grade_1"]["next_homework"] == ""
           print("data.json OK:")
-          print("  uke:", data["week"])
-          print("  1. klasse:", data["today_day"], repr(data["grade_1"]["today_homework"]))
-          print("  4. klasse:", data["today_day"], repr(data["grade_4b"]["today_homework"]))
-          print("  neste:", data["next_day"], repr(data["next_homework"]))
+          print("  uke:", data["grade_1"]["week"])
+          print("  1. klasse:", data["grade_1"]["today_day"], repr(data["grade_1"]["today_homework"]))
+          print("  4. klasse:", data["grade_4b"]["today_day"], repr(data["grade_4b"]["today_homework"]))
+          print("  neste:", data["grade_1"]["next_day"], repr(data["grade_1"]["next_homework"]))
           print("  4B neste:", data["grade_4b"]["next_day"], repr(data["grade_4b"]["next_homework"]))
           PY
       - name: Commit feed
