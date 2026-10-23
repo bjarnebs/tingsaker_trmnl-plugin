@@ -109,11 +109,11 @@ def choose_week(links: list[dict], current_week: int) -> dict:
     return max(eligible, key=lambda item: (item["week"], revision(item)))
 
 
-def extract_pdf(data: bytes) -> str:
+def extract_pdf(data: bytes, layout: bool = False) -> str:
     reader = PdfReader(io.BytesIO(data))
-    # Layout mode preserves the PDF table columns better than content-stream order,
-    # which is essential for keeping the 4B Lekse and Husk columns separate.
-    return "\n".join(page.extract_text(extraction_mode="layout") or "" for page in reader.pages)
+    if layout:
+        return "\\n".join(page.extract_text(extraction_mode="layout") or "" for page in reader.pages)
+    return "\\n".join(page.extract_text() or "" for page in reader.pages)
 
 
 def extract_docx(data: bytes) -> str:
@@ -125,16 +125,16 @@ def extract_docx(data: bytes) -> str:
     return "\n".join(parts)
 
 
-def extract_text(url: str, data: bytes) -> str:
+def extract_text(url: str, data: bytes, layout: bool = False) -> str:
     suffix = url.lower().split("?")[0]
     if suffix.endswith(".pdf"):
-        return extract_pdf(data)
+        return extract_pdf(data, layout=layout)
     if suffix.endswith(".docx"):
         return extract_docx(data)
 
     # Some archive links do not expose their file type. Detect by magic bytes.
     if data.startswith(b"%PDF"):
-        return extract_pdf(data)
+        return extract_pdf(data, layout=layout)
     if data[:2] == b"PK":
         return extract_docx(data)
 
@@ -433,7 +433,7 @@ def main() -> None:
             chosen_4b = choose_week(links_4b, week)
             log.info("Valgt 4B uke %s: %s", chosen_4b["week"], chosen_4b["url"])
             raw_4b = fetch(chosen_4b["url"])
-            text_4b = extract_text(chosen_4b["url"], raw_4b)
+            text_4b = extract_text(chosen_4b["url"], raw_4b, layout=True)
             result["grade_4b"] = build_4b_data(
                 chosen_4b["week"], text_4b, chosen_4b["url"]
             )
