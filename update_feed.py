@@ -16,8 +16,9 @@ from bs4 import BeautifulSoup
 from docx import Document
 from pypdf import PdfReader
 
-VERSION = "3.3.1"
+VERSION = "3.4.0"
 ARCHIVE_URL = "https://www.tingsakerskole.no/?show=field&fid=1369&sort=2&showfrom=0&showcount=-1"
+ARCHIVE_4B_URL = "https://www.tingsakerskole.no/?show=field&fid=1324&sort=2&showfrom=0&showcount=-1"
 DAYS = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]
 ALL_DAYS = DAYS + ["lørdag", "søndag"]
 OSLO = ZoneInfo("Europe/Oslo")
@@ -240,6 +241,65 @@ def extract_notes(text: str) -> dict[str, str]:
     return notes
 
 
+
+def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
+    """Parse the 4B table into separate homework and reminder fields.
+
+    Only text in an explicitly labelled Lekser or Husk section is accepted.
+    This deliberately avoids treating general school information as homework.
+    """
+    result = {
+        "homework": {day: "" for day in DAYS},
+        "reminders": {day: "" for day in DAYS},
+    }
+    lines = _lines(text)
+    current_day = None
+    current_section = None
+    for raw in lines:
+        # Ignore instructions specifically addressed to the other class.
+        if re.search(r"\\b4\\s*A\\b", raw, re.I):
+            continue
+        day_match = re.match(r"^(mandag|tirsdag|onsdag|torsdag|fredag)\\b\\s*[:|—-]?\\s*(.*)$", raw, re.I)
+        if day_match:
+            current_day = day_match.group(1).lower()
+            remainder = day_match.group(2).strip()
+            current_section = None
+            # Some PDF extractors keep a whole table row on one line.
+            section_match = re.search(r"\\b(lekser|husk)\\s*:?\\s*(.*)$", remainder, re.I)
+            if section_match:
+                current_section = "homework" if section_match.group(1).lower() == "lekser" else "reminders"
+                value = section_match.group(2).strip(" |:-")
+                if value:
+                    result[current_section][current_day] = value
+            continue
+
+        section_match = re.match(r"^(lekser|husk)\\s*:?\\s*(.*)$", raw, re.I)
+        if section_match and current_day:
+            current_section = "homework" if section_match.group(1).lower() == "lekser" else "reminders"
+            value = section_match.group(2).strip(" |:-")
+            if value:
+                result[current_section][current_day] = value
+            continue
+
+        if current_day and current_section and raw:
+            existing = result[current_section][current_day]
+            result[current_section][current_day] = norm(f"{existing} {raw}")
+
+    if not any(result["homework"].values()) and not any(result["reminders"].values()):
+        raise ValueError("Fant ikke tydelige Lekser/Husk-felt i 4B-planen.")
+    return result
+
+
+def build_4b_data(week: int, text: str, source_url: str) -> dict:
+    sections = extract_4b_sections(text)
+    return {
+        "week": f"uke {week}",
+        "homework": sections["homework"],
+        "reminders": sections["reminders"],
+        "source": source_url,
+    }
+
+
 def now_oslo() -> datetime:
     return datetime.now(OSLO)
 
@@ -347,6 +407,30 @@ def main() -> None:
 
     homework = extract_homework(text)
     result = build_data(week, homework, source_url, extract_notes(text))
+
+    if not args.pdf:
+        try:
+            html_4b = fetch(ARCHIVE_4B_URL).decode("utf-8", errors="replace")
+            links_4b = archive_links(html_4b)
+            chosen_4b = choose_week(links_4b, week)
+            raw_4b = fetch(chosen_4b["url"])
+            text_4b = extract_text(chosen_4b["url"], raw_4b)
+            result["grade_4b"] = build_4b_data(
+                chosen_4b["week"], text_4b, chosen_4b["url"]
+            )
+            log.info("Valgt 4B uke %s: %s", chosen_4b["week"], chosen_4b["url"])
+        except Exception as exc:
+            # Do not discard a working 1st-grade feed if the separate 4B
+            # archive temporarily fails; record the problem in the feed.
+            log.exception("Klarte ikke å oppdatere 4B")
+            result["grade_4b"] = {
+                "week": "",
+                "homework": {day: "" for day in DAYS},
+                "reminders": {day: "" for day in DAYS},
+                "source": ARCHIVE_4B_URL,
+                "error": str(exc),
+            }
+
     write_json_atomic(Path(args.out), result)
     log.info("Oppdatert %s for uke %s", args.out, week)
 
