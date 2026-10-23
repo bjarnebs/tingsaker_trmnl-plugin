@@ -59,20 +59,15 @@ python update_feed.py --pdf tests/fixtures/uke_42-solidaritetsuka.pdf --week 42 
 
 ## TRMNL-data
 
-TRMNL kan hente `data.json` fra GitHub via raw-URL. Viktige felt er:
+TRMNL henter `data.json` fra GitHub via raw-URL. Klasseinnhold ligger separat:
 
-- `today_homework`
-- `next_day`
-- `next_homework`
-- `note`
-- `next_note`
-- `homework`
-- `notes`
-- `week`
-- `source`
+- `grade_1.homework` og `grade_1.reminders`: lekser og «Husk» for 1. trinn
+- `grade_4b.homework` og `grade_4b.reminders`: lekser og «Husk» for 4B
+- `grade_1.today_day`, `grade_1.today_homework`, `grade_1.next_day` og `grade_1.next_homework`: dagens og neste lekse for 1. trinn
+- Tilsvarende dagsfelt under `grade_4b` for 4B
+- `version` og `generated_at`: felles metadata
 
-Det finnes ikke lenger noe `due`-felt.
-
+De gamle klassefeltene på toppnivå er fjernet for å unngå dupliserte data. TRMNL-layoutene i repoet bruker den nye strukturen. Oppdater eventuell egen TRMNL-input/template til å lese fra `grade_1.*` og `grade_4b.*`. Det finnes ikke noe `due`-felt.
 
 ## 4B
 
