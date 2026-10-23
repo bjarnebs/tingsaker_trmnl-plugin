@@ -434,6 +434,7 @@ def main() -> None:
             log.info("Valgt 4B uke %s: %s", chosen_4b["week"], chosen_4b["url"])
             raw_4b = fetch(chosen_4b["url"])
             text_4b = extract_text(chosen_4b["url"], raw_4b, layout=True)
+            log.info("4B PDF-uttrekk (første 100 linjer):\n%s", "\n".join(text_4b.splitlines()[:100]))
             result["grade_4b"] = build_4b_data(
                 chosen_4b["week"], text_4b, chosen_4b["url"]
             )
