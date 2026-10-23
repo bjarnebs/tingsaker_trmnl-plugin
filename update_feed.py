@@ -299,7 +299,9 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
             # The PDF places a separate 4A reminder in the same visual column;
             # exclude it from 4B, and normalize the explicit 4B label.
             if re.search(r"\b4\s*A\s+husk\b", raw, re.I):
-                reminder_cell = ""
+                # This is a separate 4A-only row in the reminder column;
+                # skip the entire extracted line, not just its right-hand cell.
+                continue
             elif re.search(r"\b4\s*B\s+husk\b", raw, re.I):
                 reminder_cell = re.sub(r".*\b4\s*B\s+husk\b\s*", "", raw, flags=re.I).strip()
             # Ignore the short instruction printed above the weekday rows.
