@@ -1,5 +1,5 @@
 {
-  "version": "3.3.1",
+  "version": "3.4.0",
   "week": "uke 43",
   "today_day": "fredag",
   "today_homework": "",
@@ -21,6 +21,24 @@
     "torsdag": "",
     "fredag": ""
   },
-  "generated_at": "2026-10-23T07:45+02:00",
-  "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf"
+  "generated_at": "2026-10-23T11:10+02:00",
+  "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf",
+  "grade_4b": {
+    "week": "uke 43",
+    "homework": {
+      "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Bruk elevens Feide-innlogging. Øv på 6-9 gangen, bruk arket eller øv på gangesanger på youtube",
+      "tirsdag": "Les teksten om adjektiv to ganger sammen med en voksen, og få underskrift på at dette er gjort.",
+      "onsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Engelsk: Les s. 52-53 høyt for en voksen. Snakk sammen - hva handlet teksten om? Prøv å oversette en av sidene til norsk.",
+      "torsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Gjør side 41 i Norsk arbeidsbok.",
+      "fredag": ""
+    },
+    "reminders": {
+      "mandag": "Ta med gymsko",
+      "tirsdag": "",
+      "onsdag": "Badetøy for de som vil. 4A husk bibliotekbøker",
+      "torsdag": "4B husk bibliotekbøker",
+      "fredag": ""
+    },
+    "source": "https://www.tingsakerskole.no/files/2026/10/1-uke_43.pdf"
+  }
 }
