@@ -63,3 +63,14 @@ def test_4b_refuses_unlabelled_content():
         assert "Lekser/Husk" in str(exc)
     else:
         raise AssertionError("Parseren skal ikke gjette lekser eller husk")
+
+
+def test_week_selection_prefers_highest_numbered_revision():
+    from update_feed import choose_week
+
+    links = [
+        {"week": 43, "url": "https://example.test/files/0-uke_43.pdf"},
+        {"week": 43, "url": "https://example.test/files/1-uke_43.pdf"},
+        {"week": 42, "url": "https://example.test/files/uke_42.pdf"},
+    ]
+    assert choose_week(links, 43)["url"].endswith("1-uke_43.pdf")
