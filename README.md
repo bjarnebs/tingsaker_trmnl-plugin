@@ -1,8 +1,12 @@
-# Tingsaker TRMNL-plugin v3.4.0
+# Tingsaker TRMNL-plugin v3.5.1
 
 Automatisk feed med lekser fra Tingsaker skole for 1. trinn og 4B.
 
-## Hva er forbedret i 3.3.1?
+## Hva er forbedret i 3.5.1?
+
+- Samler klassefeltene under `grade_1` og `grade_4b`, uten dupliserte klassefelt på toppnivå.
+- Hver klasse har egne dagsfelt, lekser og «Husk»-påminnelser.
+- Feed-normaliseringen validerer JSON før den skrives.
 
 - Fjerner det tidligere hardkodede `due: 17:00`.
 - Bruker eksplisitt `Europe/Oslo` når dagens dato/ukedag beregnes.
