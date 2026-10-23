@@ -299,8 +299,9 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
             # The PDF places a separate 4A reminder in the same visual column;
             # exclude it from 4B, and normalize the explicit 4B label.
             if re.search(r"\b4\s*A\s+husk\b", raw, re.I):
-                # This is a separate 4A-only row in the reminder column;
-                # skip the entire extracted line, not just its right-hand cell.
+                # The PDF wraps the 4A reminder onto the next line, so clear
+                # the active day too; otherwise that continuation leaks into 4B.
+                current_day = None
                 continue
             elif re.search(r"\b4\s*B\s+husk\b", raw, re.I):
                 reminder_cell = re.sub(r".*\b4\s*B\s+husk\b\s*", "", raw, flags=re.I).strip()
