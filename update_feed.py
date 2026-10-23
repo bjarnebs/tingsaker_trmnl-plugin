@@ -250,23 +250,79 @@ def extract_notes(text: str) -> dict[str, str]:
 
 
 def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
-    """Parse 4B homework and reminders without combining the two columns.
-
-Accepts extracted text from PDF and DOCX sources.
-"""
+    """Parse 4B homework and reminders from a labelled, column-aligned PDF table."""
     result = {
         "homework": {day: "" for day in DAYS},
         "reminders": {day: "" for day in DAYS},
     }
-    lines = _lines(text)
+    lines = text.splitlines()
+
+    # The live 4B PDF is a three-column table. pypdf's layout extraction
+    # preserves horizontal spacing, so use the header's column boundaries
+    # instead of treating wrapped cell text as a continuation of one field.
+    header_index = next(
+        (i for i, line in enumerate(lines)
+         if re.search(r"\bDag\b", line, re.I)
+         and re.search(r"\bLekse\b", line, re.I)
+         and re.search(r"\bHusk\b", line, re.I)),
+        None,
+    )
+    if header_index is not None:
+        header = lines[header_index]
+        homework_start = re.search(r"\bLekse\b", header, re.I).start()
+        reminders_start = re.search(r"\bHusk\b", header, re.I).start()
+        current_day = None
+
+        for raw in lines[header_index + 1:]:
+            if INFO_HEADER_RE.search(raw):
+                break
+            # Day names are only recognized at the left edge of a table row.
+            day_match = re.match(r"^\s*(Mandag|Tirsdag|Onsdag|Torsdag|Fredag)\b", raw, re.I)
+            if day_match:
+                current_day = day_match.group(1).lower()
+            elif re.match(r"^\s*(?:4\s*A\b|4\s*B\s+husk\b)", raw, re.I):
+                # 4A's reminder must never leak into the 4B data. The 4B
+                # reminder row is handled explicitly below.
+                if re.match(r"^\s*4\s*B\s+husk\b", raw, re.I):
+                    value = raw[reminders_start:].strip() if len(raw) > reminders_start else ""
+                    value = re.sub(r"^\s*4\s*B\s+husk\b\s*", "", value, flags=re.I)
+                    if value:
+                        result["reminders"]["torsdag"] = norm(
+                            f'{result["reminders"]["torsdag"]} {value}'
+                        )
+                continue
+
+            if not current_day:
+                continue
+            homework_cell = raw[homework_start:reminders_start].strip() if len(raw) > homework_start else ""
+            reminder_cell = raw[reminders_start:].strip() if len(raw) > reminders_start else ""
+            # Ignore the short instruction printed above the weekday rows.
+            if re.search(r"Matteleksen må helst|Husk å lese hver dag", raw, re.I):
+                continue
+            homework_cell = re.sub(r"^[●•▪\-]+\s*", "", homework_cell).strip()
+            reminder_cell = re.sub(r"^[●•▪\-]+\s*", "", reminder_cell).strip()
+            if homework_cell:
+                result["homework"][current_day] = norm(
+                    f'{result["homework"][current_day]} {homework_cell}'
+                )
+            if reminder_cell:
+                result["reminders"][current_day] = norm(
+                    f'{result["reminders"][current_day]} {reminder_cell}'
+                )
+
+        # Remove duplicate fragments and whitespace from wrapped lines.
+        for section in ("homework", "reminders"):
+            for day, value in result[section].items():
+                result[section][day] = norm(value)
+        if any(result["homework"].values()) or any(result["reminders"].values()):
+            return result
+
+    # Conservative fallback for DOCX or simple labelled text fixtures.
     current_day = None
     current_section = None
-
-    for raw in lines:
-        # Ignore a line specifically addressed to 4A, without losing later 4B rows.
+    for raw in _lines(text):
         if re.search(r"\b4\s*A\b", raw, re.I):
             continue
-
         lowered = raw.lower()
         day = next((name for name in DAYS if lowered == name or
                     lowered.startswith(name + " ") or
@@ -277,36 +333,28 @@ Accepts extracted text from PDF and DOCX sources.
             current_day = day
             remainder = raw[len(day):].lstrip(" :|—-")
             current_section = None
-            lowered_remainder = remainder.lower()
-            # Locate whichever explicit field label occurs first in a table row.
-            matches = [(lowered_remainder.find(label), label)
-                       for label in ("lekser", "husk")
-                       if lowered_remainder.find(label) >= 0]
-            if matches:
-                pos, label = min(matches)
-                current_section = "homework" if label == "lekser" else "reminders"
-                value = remainder[pos + len(label):].lstrip(" :|—-")
-                if value:
-                    result[current_section][current_day] = value
+            match = re.match(r"^(lekser|husk)\b\s*:?[ ]*(.*)$", remainder, re.I)
+            if match:
+                current_section = "homework" if match.group(1).lower() == "lekser" else "reminders"
+                if match.group(2):
+                    result[current_section][current_day] = match.group(2)
             continue
-
         label_match = re.match(r"^(lekser|husk)\b\s*:?[ ]*(.*)$", raw, re.I)
         if label_match and current_day:
             current_section = "homework" if label_match.group(1).lower() == "lekser" else "reminders"
-            value = label_match.group(2).strip(" |:-")
-            if value:
-                existing = result[current_section][current_day]
-                result[current_section][current_day] = norm(f"{existing} {value}")
+            if label_match.group(2):
+                result[current_section][current_day] = norm(
+                    f'{result[current_section][current_day]} {label_match.group(2)}'
+                )
             continue
-
         if current_day and current_section and raw:
-            existing = result[current_section][current_day]
-            result[current_section][current_day] = norm(f"{existing} {raw}")
+            result[current_section][current_day] = norm(
+                f'{result[current_section][current_day]} {raw}'
+            )
 
     if not any(result["homework"].values()) and not any(result["reminders"].values()):
         raise ValueError("Fant ikke tydelige Lekser/Husk-felt i 4B-planen.")
     return result
-
 
 def build_4b_data(week: int, text: str, source_url: str) -> dict:
     sections = extract_4b_sections(text)
