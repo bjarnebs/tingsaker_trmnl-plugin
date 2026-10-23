@@ -53,13 +53,13 @@ def fetch(url: str) -> bytes:
     return response.content
 
 
-def archive_links(html: str) -> list[dict]:
+def archive_links(html: str, base_url: str = ARCHIVE_URL) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     found = []
 
     for anchor in soup.find_all("a", href=True):
         text = norm(anchor.get_text(" ", strip=True))
-        href = urljoin(ARCHIVE_URL, anchor["href"])
+        href = urljoin(base_url, anchor["href"])
 
         match = re.search(r"\buke\s*(\d{1,2})\b", text, re.I)
 
@@ -411,7 +411,7 @@ def main() -> None:
     if not args.pdf:
         try:
             html_4b = fetch(ARCHIVE_4B_URL).decode("utf-8", errors="replace")
-            links_4b = archive_links(html_4b)
+            links_4b = archive_links(html_4b, ARCHIVE_4B_URL)
             chosen_4b = choose_week(links_4b, week)
             raw_4b = fetch(chosen_4b["url"])
             text_4b = extract_text(chosen_4b["url"], raw_4b)
