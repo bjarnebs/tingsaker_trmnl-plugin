@@ -296,20 +296,14 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
                 continue
             homework_cell = raw[homework_start:reminders_start].strip() if len(raw) > homework_start else ""
             reminder_cell = raw[reminders_start:].strip() if len(raw) > reminders_start else ""
-            # The PDF places a separate 4A reminder in the same visual column;
-            # exclude it from 4B, and normalize the explicit 4B label.
-            if re.search(r"\b4\s*A\s+husk\b", raw, re.I):
-                # The PDF wraps the 4A reminder onto the next line, so clear
-                # the active day too; otherwise that continuation leaks into 4B.
-                current_day = None
-                continue
-            elif re.search(r"\b4\s*B\s+husk\b", raw, re.I):
-                reminder_cell = re.sub(r".*\b4\s*B\s+husk\b\s*", "", raw, flags=re.I).strip()
+            # Keep all text in the Husk column, including occasional 4A notes.
+            # Strip only the explicit 4B label if it appears in the cell.
             # Ignore the short instruction printed above the weekday rows.
             if re.search(r"Matteleksen må helst|Husk å lese hver dag", raw, re.I):
                 continue
             homework_cell = re.sub(r"^[●•▪\-]+\s*", "", homework_cell).strip()
             reminder_cell = re.sub(r"^[●•▪\-]+\s*", "", reminder_cell).strip()
+            reminder_cell = re.sub(r"^4\\s*B\\s+husk\\b\\s*", "", reminder_cell, flags=re.I).strip()
             if homework_cell:
                 result["homework"][current_day] = norm(
                     f'{result["homework"][current_day]} {homework_cell}'
