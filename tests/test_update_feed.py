@@ -19,7 +19,7 @@ def run_fixture(tmp_path):
 
 def test_week42(tmp_path):
     data = run_fixture(tmp_path)
-    hw = data["homework"]
+    hw = data["grade_1"]["homework"]
 
     assert "Les første side av leseleksa" in hw["mandag"]
     assert "Les tegneserien tre ganger" in hw["tirsdag"]
@@ -27,10 +27,12 @@ def test_week42(tmp_path):
     assert "tre ting på b" in hw["torsdag"]
     assert hw["fredag"] == ""
 
-    assert "Ta derfor med både mat og frukt" in data["notes"]["onsdag"]
-    assert data["notes"]["mandag"] == ""
-    assert "Sponsorskjema" not in data["notes"]["onsdag"]
+    assert "Ta derfor med både mat og frukt" in data["grade_1"]["reminders"]["onsdag"]
+    assert data["grade_1"]["reminders"]["mandag"] == ""
+    assert "Sponsorskjema" not in data["grade_1"]["reminders"]["onsdag"]
     assert "due" not in data
+    assert not ({"week", "homework", "notes", "today_homework", "today_day", "source"} & data.keys())
+    assert data["grade_1"]["label"] == "1. klasse"
 
 
 def test_variant_labels_are_supported():
@@ -88,18 +90,14 @@ def test_atomic_output_validation(tmp_path):
 
     path = tmp_path / "data.json"
     data = {
-        "version": "3.3.1",
-        "week": "uke 42",
-        "today_day": "mandag",
-        "today_homework": "",
-        "next_day": "",
-        "next_homework": "",
-        "note": "",
-        "next_note": "",
-        "homework": {d: "" for d in ["mandag","tirsdag","onsdag","torsdag","fredag"]},
-        "notes": {d: "" for d in ["mandag","tirsdag","onsdag","torsdag","fredag"]},
-        "generated_at": "2026-10-20T21:00+02:00",
-        "source": "test",
+        "version": "3.5.1", "generated_at": "2026-10-20T21:00+02:00",
+        "grade_1": {
+            "label": "1. klasse", "week": "uke 42", "today_day": "mandag",
+            "today_homework": "", "next_day": "", "next_homework": "",
+            "homework": {d: "" for d in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]},
+            "reminders": {d: "" for d in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]},
+            "source": "test",
+        },
     }
     write_json_atomic(path, data)
-    assert json.loads(path.read_text())["version"] == "3.3.1"
+    assert json.loads(path.read_text())["version"] == "3.5.1"
