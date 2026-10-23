@@ -442,7 +442,7 @@ def main() -> None:
                      {day: value for day, value in result["grade_4b"]["reminders"].items() if value})
         except Exception as exc:
             if "text_4b" in locals():
-                log.error("Uttrekket fra 4B-dokumentet (første 60 linjer):\\n%s", "\\n".join(text_4b.splitlines()[:60]))
+                log.error("Uttrekket fra 4B-dokumentet (første 60 linjer):\n%s", "\n".join(text_4b.splitlines()[:60]))
             # Do not discard a working 1st-grade feed if the separate 4B
             # archive temporarily fails; record the problem in the feed.
             log.exception("Klarte ikke å oppdatere 4B")
