@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from docx import Document
 from pypdf import PdfReader
 
-VERSION = "3.4.0"
+VERSION = "3.5.1"
 ARCHIVE_URL = "https://www.tingsakerskole.no/?show=field&fid=1369&sort=2&showfrom=0&showcount=-1"
 ARCHIVE_4B_URL = "https://www.tingsakerskole.no/?show=field&fid=1324&sort=2&showfrom=0&showcount=-1"
 DAYS = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]
@@ -361,11 +361,14 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
 
 def build_4b_data(week: int, text: str, source_url: str) -> dict:
     sections = extract_4b_sections(text)
+    today_name = day_name(now_oslo().date())
+    next_day, next_hw = next_with_homework(sections["homework"], now_oslo().date())
     return {
-        "week": f"uke {week}",
-        "homework": sections["homework"],
-        "reminders": sections["reminders"],
-        "source": source_url,
+        "label": "4. klasse", "week": f"uke {week}",
+        "homework": sections["homework"], "reminders": sections["reminders"],
+        "source": source_url, "today_day": today_name,
+        "today_homework": sections["homework"].get(today_name, ""),
+        "next_day": next_day, "next_homework": next_hw,
     }
 
 
@@ -399,40 +402,36 @@ def build_data(
 
     return {
         "version": VERSION,
-        "week": f"uke {week}",
-        "today_day": today_name,
-        "today_homework": homework.get(today_name, ""),
-        "next_day": next_day,
-        "next_homework": next_hw,
-        "note": notes.get(today_name, ""),
-        "next_note": notes.get(next_day, ""),
-        "homework": homework,
-        "notes": notes,
         "generated_at": now.isoformat(timespec="minutes"),
-        "source": source_url,
+        "grade_1": {
+            "label": "1. klasse", "week": f"uke {week}",
+            "today_day": today_name, "today_homework": homework.get(today_name, ""),
+            "next_day": next_day, "next_homework": next_hw,
+            "homework": homework, "reminders": notes, "source": source_url,
+        },
     }
 
 
 def validate_data(data: dict) -> None:
-    required = {
-        "version", "week", "today_day", "today_homework", "next_day",
-        "next_homework", "note", "next_note", "homework", "notes",
-        "generated_at", "source",
-    }
+    required = {"version", "generated_at", "grade_1"}
     missing = required - data.keys()
     if missing:
         raise ValueError(f"Mangler felt i data.json: {sorted(missing)}")
-
-    if not re.fullmatch(r"uke \d{1,2}", str(data["week"])):
-        raise ValueError("Ugyldig ukeformat.")
-    if set(data["homework"]) != set(DAYS):
-        raise ValueError("homework mangler én eller flere ukedager.")
-    if set(data["notes"]) != set(DAYS):
-        raise ValueError("notes mangler én eller flere ukedager.")
-
-    for field in ("today_homework", "next_homework", "note", "next_note"):
-        if not isinstance(data[field], str):
-            raise ValueError(f"Feltet {field} må være tekst.")
+    legacy_fields = {"week", "today_day", "today_homework", "next_day", "next_homework", "note", "next_note", "homework", "notes", "source"}
+    if legacy_fields & data.keys():
+        raise ValueError("Klassevise data skal ligge under grade_1 eller grade_4b.")
+    for grade_key in ("grade_1", "grade_4b"):
+        if grade_key not in data:
+            continue
+        grade = data[grade_key]
+        if not re.fullmatch(r"uke \\d{1,2}", str(grade.get("week", ""))):
+            raise ValueError(f"Ugyldig ukeformat i {grade_key}.")
+        for field in ("homework", "reminders"):
+            if set(grade.get(field, {})) != set(DAYS):
+                raise ValueError(f"{grade_key}.{field} mangler én eller flere ukedager.")
+        for field in ("today_homework", "next_homework"):
+            if not isinstance(grade.get(field, ""), str):
+                raise ValueError(f"{grade_key}.{field} må være tekst.")
 
 
 def write_json_atomic(path: Path, data: dict) -> None:
@@ -499,11 +498,13 @@ def main() -> None:
             # archive temporarily fails; record the problem in the feed.
             log.exception("Klarte ikke å oppdatere 4B")
             result["grade_4b"] = {
-                "week": "",
+                "label": "4. klasse", "week": "",
                 "homework": {day: "" for day in DAYS},
                 "reminders": {day: "" for day in DAYS},
                 "source": ARCHIVE_4B_URL,
-                "error": str(exc),
+                "today_day": result["grade_1"]["today_day"],
+                "today_homework": "", "next_day": result["grade_1"]["next_day"],
+                "next_homework": "", "error": str(exc),
             }
 
     write_json_atomic(Path(args.out), result)
