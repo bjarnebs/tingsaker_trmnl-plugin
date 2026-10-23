@@ -85,7 +85,10 @@ def main(path: str = "data.json") -> None:
         })
 
     data["version"] = update_feed.VERSION
-    target.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    serialized = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
+    # Validate the exact serialized payload before replacing the feed.
+    json.loads(serialized)
+    target.write_text(serialized, encoding="utf-8")
 
 
 if __name__ == "__main__":
