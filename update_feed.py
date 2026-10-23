@@ -16,8 +16,9 @@ from bs4 import BeautifulSoup
 from docx import Document
 from pypdf import PdfReader
 
-VERSION = "3.3.1"
+VERSION = "3.4.0"
 ARCHIVE_URL = "https://www.tingsakerskole.no/?show=field&fid=1369&sort=2&showfrom=0&showcount=-1"
+ARCHIVE_4B_URL = "https://www.tingsakerskole.no/?show=field&fid=1324&sort=2&showfrom=0&showcount=-1"
 DAYS = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]
 ALL_DAYS = DAYS + ["lørdag", "søndag"]
 OSLO = ZoneInfo("Europe/Oslo")
@@ -52,13 +53,13 @@ def fetch(url: str) -> bytes:
     return response.content
 
 
-def archive_links(html: str) -> list[dict]:
+def archive_links(html: str, base_url: str = ARCHIVE_URL) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
     found = []
 
     for anchor in soup.find_all("a", href=True):
         text = norm(anchor.get_text(" ", strip=True))
-        href = urljoin(ARCHIVE_URL, anchor["href"])
+        href = urljoin(base_url, anchor["href"])
 
         match = re.search(r"\buke\s*(\d{1,2})\b", text, re.I)
 
@@ -100,11 +101,18 @@ def choose_week(links: list[dict], current_week: int) -> dict:
             f"Fant ukeplaner, men ingen for inneværende uke eller tidligere "
             f"(uke {current_week})."
         )
-    return max(eligible, key=lambda item: item["week"])
+    def revision(item: dict) -> int:
+        # The archive may list 0-uke_43.pdf and 1-uke_43.pdf; prefer the higher revision.
+        match = re.search(r"/(\d+)-uke[_ -]?\d+\.(?:pdf|docx)(?:$|\?)", item["url"], re.I)
+        return int(match.group(1)) if match else 0
+
+    return max(eligible, key=lambda item: (item["week"], revision(item)))
 
 
-def extract_pdf(data: bytes) -> str:
+def extract_pdf(data: bytes, layout: bool = False) -> str:
     reader = PdfReader(io.BytesIO(data))
+    if layout:
+        return "\n".join(page.extract_text(extraction_mode="layout") or "" for page in reader.pages)
     return "\n".join(page.extract_text() or "" for page in reader.pages)
 
 
@@ -117,16 +125,16 @@ def extract_docx(data: bytes) -> str:
     return "\n".join(parts)
 
 
-def extract_text(url: str, data: bytes) -> str:
+def extract_text(url: str, data: bytes, layout: bool = False) -> str:
     suffix = url.lower().split("?")[0]
     if suffix.endswith(".pdf"):
-        return extract_pdf(data)
+        return extract_pdf(data, layout=layout)
     if suffix.endswith(".docx"):
         return extract_docx(data)
 
     # Some archive links do not expose their file type. Detect by magic bytes.
     if data.startswith(b"%PDF"):
-        return extract_pdf(data)
+        return extract_pdf(data, layout=layout)
     if data[:2] == b"PK":
         return extract_docx(data)
 
@@ -240,6 +248,127 @@ def extract_notes(text: str) -> dict[str, str]:
     return notes
 
 
+
+def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
+    """Parse 4B homework and reminders from a labelled, column-aligned PDF table."""
+    result = {
+        "homework": {day: "" for day in DAYS},
+        "reminders": {day: "" for day in DAYS},
+    }
+    lines = text.splitlines()
+
+    # The live 4B PDF is a three-column table. pypdf's layout extraction
+    # preserves horizontal spacing, so use the header's column boundaries
+    # instead of treating wrapped cell text as a continuation of one field.
+    header_index = next(
+        (i for i, line in enumerate(lines)
+         if re.search(r"\bDag\b", line, re.I)
+         and re.search(r"\bLekse\b", line, re.I)
+         and re.search(r"\bHusk\b", line, re.I)),
+        None,
+    )
+    if header_index is not None:
+        header = lines[header_index]
+        homework_start = re.search(r"\bLekse\b", header, re.I).start()
+        reminders_start = re.search(r"\bHusk\b", header, re.I).start()
+        current_day = None
+
+        for raw in lines[header_index + 1:]:
+            if INFO_HEADER_RE.search(raw):
+                break
+            # Day names are only recognized at the left edge of a table row.
+            day_match = re.match(r"^\s*(Mandag|Tirsdag|Onsdag|Torsdag|Fredag)\b", raw, re.I)
+            if day_match:
+                current_day = day_match.group(1).lower()
+            elif re.match(r"^\s*(?:4\s*A\b|4\s*B\s+husk\b)", raw, re.I):
+                # 4A's reminder must never leak into the 4B data. The 4B
+                # reminder row is handled explicitly below.
+                if re.match(r"^\s*4\s*B\s+husk\b", raw, re.I):
+                    value = raw[reminders_start:].strip() if len(raw) > reminders_start else ""
+                    value = re.sub(r"^\s*4\s*B\s+husk\b\s*", "", value, flags=re.I)
+                    if value:
+                        result["reminders"]["torsdag"] = norm(
+                            f'{result["reminders"]["torsdag"]} {value}'
+                        )
+                continue
+
+            if not current_day:
+                continue
+            homework_cell = raw[homework_start:reminders_start].strip() if len(raw) > homework_start else ""
+            reminder_cell = raw[reminders_start:].strip() if len(raw) > reminders_start else ""
+            # Keep all text in the Husk column, including occasional 4A notes.
+            # Strip only the explicit 4B label if it appears in the cell.
+            # Ignore the short instruction printed above the weekday rows.
+            if re.search(r"Matteleksen må helst|Husk å lese hver dag", raw, re.I):
+                continue
+            homework_cell = re.sub(r"^[●•▪\-]+\s*", "", homework_cell).strip()
+            reminder_cell = re.sub(r"^[●•▪\-]+\s*", "", reminder_cell).strip()
+            reminder_cell = re.sub(r"^4\\s*B\\s+husk\\b\\s*", "", reminder_cell, flags=re.I).strip()
+            if homework_cell:
+                result["homework"][current_day] = norm(
+                    f'{result["homework"][current_day]} {homework_cell}'
+                )
+            if reminder_cell:
+                result["reminders"][current_day] = norm(
+                    f'{result["reminders"][current_day]} {reminder_cell}'
+                )
+
+        # Remove duplicate fragments and whitespace from wrapped lines.
+        for section in ("homework", "reminders"):
+            for day, value in result[section].items():
+                result[section][day] = norm(value)
+        if any(result["homework"].values()) or any(result["reminders"].values()):
+            return result
+
+    # Conservative fallback for DOCX or simple labelled text fixtures.
+    current_day = None
+    current_section = None
+    for raw in _lines(text):
+        if re.search(r"\b4\s*A\b", raw, re.I):
+            continue
+        lowered = raw.lower()
+        day = next((name for name in DAYS if lowered == name or
+                    lowered.startswith(name + " ") or
+                    lowered.startswith(name + ":") or
+                    lowered.startswith(name + "|") or
+                    lowered.startswith(name + "-")), None)
+        if day:
+            current_day = day
+            remainder = raw[len(day):].lstrip(" :|—-")
+            current_section = None
+            match = re.match(r"^(lekser|husk)\b\s*:?[ ]*(.*)$", remainder, re.I)
+            if match:
+                current_section = "homework" if match.group(1).lower() == "lekser" else "reminders"
+                if match.group(2):
+                    result[current_section][current_day] = match.group(2)
+            continue
+        label_match = re.match(r"^(lekser|husk)\b\s*:?[ ]*(.*)$", raw, re.I)
+        if label_match and current_day:
+            current_section = "homework" if label_match.group(1).lower() == "lekser" else "reminders"
+            if label_match.group(2):
+                result[current_section][current_day] = norm(
+                    f'{result[current_section][current_day]} {label_match.group(2)}'
+                )
+            continue
+        if current_day and current_section and raw:
+            result[current_section][current_day] = norm(
+                f'{result[current_section][current_day]} {raw}'
+            )
+
+    if not any(result["homework"].values()) and not any(result["reminders"].values()):
+        raise ValueError("Fant ikke tydelige Lekser/Husk-felt i 4B-planen.")
+    return result
+
+def build_4b_data(week: int, text: str, source_url: str) -> dict:
+    sections = extract_4b_sections(text)
+    return {
+        "week": f"uke {week}",
+        "homework": sections["homework"],
+        "reminders": sections["reminders"],
+        "source": source_url,
+    }
+
+
 def now_oslo() -> datetime:
     return datetime.now(OSLO)
 
@@ -347,6 +476,36 @@ def main() -> None:
 
     homework = extract_homework(text)
     result = build_data(week, homework, source_url, extract_notes(text))
+
+    if not args.pdf:
+        try:
+            html_4b = fetch(ARCHIVE_4B_URL).decode("utf-8", errors="replace")
+            links_4b = archive_links(html_4b, ARCHIVE_4B_URL)
+            chosen_4b = choose_week(links_4b, week)
+            log.info("Valgt 4B uke %s: %s", chosen_4b["week"], chosen_4b["url"])
+            raw_4b = fetch(chosen_4b["url"])
+            text_4b = extract_text(chosen_4b["url"], raw_4b, layout=True)
+            log.info("4B PDF-uttrekk (første 100 linjer):\n%s", "\n".join(text_4b.splitlines()[:100]))
+            result["grade_4b"] = build_4b_data(
+                chosen_4b["week"], text_4b, chosen_4b["url"]
+            )
+            log.info("4B uttrekk kontroll: lekser=%s, husk=%s",
+                     {day: value for day, value in result["grade_4b"]["homework"].items() if value},
+                     {day: value for day, value in result["grade_4b"]["reminders"].items() if value})
+        except Exception as exc:
+            if "text_4b" in locals():
+                log.error("Uttrekket fra 4B-dokumentet (første 60 linjer):\n%s", "\n".join(text_4b.splitlines()[:60]))
+            # Do not discard a working 1st-grade feed if the separate 4B
+            # archive temporarily fails; record the problem in the feed.
+            log.exception("Klarte ikke å oppdatere 4B")
+            result["grade_4b"] = {
+                "week": "",
+                "homework": {day: "" for day in DAYS},
+                "reminders": {day: "" for day in DAYS},
+                "source": ARCHIVE_4B_URL,
+                "error": str(exc),
+            }
+
     write_json_atomic(Path(args.out), result)
     log.info("Oppdatert %s for uke %s", args.out, week)
 

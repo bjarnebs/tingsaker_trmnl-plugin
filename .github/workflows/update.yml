@@ -1,6 +1,7 @@
 name: Update Tingsaker homework
 
 on:
+  pull_request:
   workflow_dispatch:
   schedule:
     # 07:15 Oslo in summer time, 06:15 in winter time.
@@ -34,9 +35,56 @@ jobs:
       - name: Validate generated feed
         run: python -m json.tool data.json >/dev/null
       - name: Commit feed
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data.json
           git diff --cached --quiet || git commit -m "Update homework feed"
           git push
+
+  audit-4b-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Audit every available 4B archive week
+        run: |
+          python - <<'PY'
+          from collections import defaultdict
+          from update_feed import ARCHIVE_4B_URL, archive_links, extract_4b_sections, extract_text, fetch
+
+          html = fetch(ARCHIVE_4B_URL).decode("utf-8", errors="replace")
+          links = archive_links(html, ARCHIVE_4B_URL)
+          # Keep distinct files, including multiple revisions of the same week.
+          unique = {item["url"]: item for item in links}
+          if not unique:
+              raise SystemExit("FEIL: Fant ingen ukeplaner i 4B-arkivet")
+
+          failures = []
+          print(f"Fant {len(unique)} ukeplandokumenter i 4B-arkivet")
+          for item in sorted(unique.values(), key=lambda x: (x["week"], x["url"])):
+              label = f"uke {item['week']} — {item['url']}"
+              try:
+                  raw = fetch(item["url"])
+                  text = extract_text(item["url"], raw, layout=True)
+                  parsed = extract_4b_sections(text)
+                  homework_days = [d for d, v in parsed["homework"].items() if v]
+                  reminder_days = [d for d, v in parsed["reminders"].items() if v]
+                  if not homework_days and not reminder_days:
+                      raise ValueError("parseren fant ingen lekser eller Husk-tekst")
+                  print(f"OK: {label}; lekser={homework_days}; husk={reminder_days}")
+              except Exception as exc:
+                  failures.append((label, str(exc)))
+                  print(f"FEIL: {label}: {exc}")
+
+          print(f"\nResultat: {len(unique) - len(failures)}/{len(unique)} dokumenter bestått")
+          if failures:
+              print("Dokumenter som må undersøkes:")
+              for label, error in failures:
+                  print(f"- {label}: {error}")
+              raise SystemExit(1)
+          PY

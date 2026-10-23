@@ -1,6 +1,6 @@
-# Tingsaker TRMNL-plugin v3.3.1
+# Tingsaker TRMNL-plugin v3.4.0
 
-Automatisk feed med lekser fra Tingsaker skole sitt 1.-trinns ukeplanarkiv.
+Automatisk feed med lekser fra Tingsaker skole for 1. trinn og 4B.
 
 ## Hva er forbedret i 3.3.1?
 
@@ -72,3 +72,14 @@ TRMNL kan hente `data.json` fra GitHub via raw-URL. Viktige felt er:
 - `source`
 
 Det finnes ikke lenger noe `due`-felt.
+
+
+## 4B
+
+Versjon 3.4.0 forsøker også å hente 4B fra skolens eget arkiv. I feeden ligger dette separat under `grade_4b`:
+
+- `grade_4b.homework`: lekser for mandag–fredag
+- `grade_4b.reminders`: «Husk»-feltet for mandag–fredag
+- `grade_4b.source`: kilde til ukeplanen
+
+Lekser og «Husk» holdes atskilt. Parseren leser bare tekst som er knyttet til tydelige `Lekser`- eller `Husk`-etiketter, og skal ikke gjette dersom formatet i PDF-en ikke lar seg tolke. De fire TRMNL-layoutene viser begge klassene for dagens ukedag. Hvis 4B-arkivet ikke kan leses, beholdes 1. trinns feed og 4B-feltene blir tomme med en feilmelding i JSON.
