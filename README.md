@@ -9,6 +9,7 @@ Automatisk oppdatert leksefeed fra Tingsaker skole for **1. trinn og 4B**, laget
 - [Dataformat](#dataformat)
 - [Tester](#tester)
 - [TRMNL-oppsett](#trmnl-oppsett)
+- [Feilsøking](#feilsøking)
 - [Prosjektfiler](#prosjektfiler)
 
 ## Funksjoner
@@ -74,7 +75,59 @@ Se **Actions** i GitHub for resultatene fra automatiske tester og arkivkontrolle
 
 ## TRMNL-oppsett
 
-Konfigurer TRMNL til å hente `data.json` fra GitHub via raw-URL. Layoutene i repositoryet er laget for den nye datastrukturen med `grade_1` og `grade_4b`.
+Denne delen beskriver hvilke verdier pluginen forventer. Navn på menyer og tilgjengelige datakilder kan variere med TRMNL-oppsettet ditt, så bruk dette som en sjekkliste mot den aktuelle plugin-editoren.
+
+### 1. Koble til JSON-feed
+
+Bruk den rå JSON-filen i GitHub som datakilde (raw file), ikke HTML-visningen av GitHub-filen:
+
+```text
+https://raw.githubusercontent.com/bjarnebs/tingsaker_trmnl-plugin/main/data.json
+```
+
+Hvis TRMNL-oppsettet ber om en URL til ekstern data, lim inn adressen der. Kontroller først at adressen åpner gyldig JSON i nettleseren. Feedens innhold oppdateres automatisk av GitHub Actions; det er normalt ikke nødvendig å redigere `data.json` manuelt.
+
+### 2. Kontroller feltene
+
+Dataene er nøstet under `grade_1` og `grade_4b`. Eksempler på felt som layoutene bruker:
+
+| Formål | JSON-felt |
+| --- | --- |
+| Ukedag for 1. trinn | `grade_1.today_day` |
+| Dagens lekser for 1. trinn | `grade_1.today_homework` |
+| Påminnelse for 1. trinn | `grade_1.reminders` med dagens ukedag som nøkkel |
+| Ukedag for 4B | `grade_4b.today_day` |
+| Lekser for 4B | `grade_4b.homework` med dagens ukedag som nøkkel |
+| Påminnelse for 4B | `grade_4b.reminders` med dagens ukedag som nøkkel |
+| Sist generert | `generated_at` |
+
+De medfølgende Liquid-layoutene forventer disse objektene og feltene. Ikke flat ut JSON-strukturen eller flytt klassefeltene til toppnivå uten samtidig å oppdatere layoutene.
+
+### 3. Velg layout
+
+Repositoryet inneholder fire Liquid-layouts:
+
+- `full.liquid` – full visning av begge klassene.
+- `half_vertical.liquid` – layout for vertikal halvskjerm.
+- `half_horizontal.liquid` – layout for horisontal halvskjerm.
+- `quadrant.liquid` – kompakt visning i én kvadrant.
+
+Velg layouten som passer skjermoppsettet ditt, og bruk den tilsvarende Liquid-filen i plugin-editoren. For første oppsett er `full.liquid` et nyttig utgangspunkt fordi den viser begge klassene og tidspunktet for oppdateringen.
+
+### 4. Test før du tar den i bruk
+
+1. Åpne JSON-URL-en og kontroller at den returnerer JSON, ikke en GitHub-nettside eller en feilmelding.
+2. Kontroller at `grade_1`, `grade_4b` og `generated_at` finnes i dataene.
+3. Forhåndsvis layouten i TRMNL og se at begge klassene vises.
+4. Kontroller en dag med lekser og en dag uten lekser, slik at reserve-tekstene også blir testet.
+
+## Feilsøking
+
+- **TRMNL viser ikke data:** Kontroller at du bruker `raw.githubusercontent.com`-adressen, og at JSON-filen åpnes uten innlogging.
+- **Feltene vises som tomme:** Kontroller at datakilden er koblet til riktig JSON, og at feltnavnene har prefikset `grade_1` eller `grade_4b`.
+- **Feil ukedag eller gamle lekser:** Se på `generated_at` i JSON-filen, og kontroller siste kjøring under GitHub Actions.
+- **4B mangler data:** Se etter feilmelding i JSON-dataene og sjekk resultatet av arkivkontrollen for 4B under Actions.
+- **Layouten gir Liquid-feil:** Kontroller at du bruker layoutfilen fra dette repositoryet sammen med den tilhørende datastrukturen.
 
 ## Prosjektfiler
 
