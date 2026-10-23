@@ -262,15 +262,15 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
     current_section = None
     for raw in lines:
         # Ignore instructions specifically addressed to the other class.
-        if re.search(r"\\b4\\s*A\\b", raw, re.I):
+        if re.search(r"\b4\s*A\b", raw, re.I):
             continue
-        day_match = re.match(r"^(mandag|tirsdag|onsdag|torsdag|fredag)\\b\\s*[:|—-]?\\s*(.*)$", raw, re.I)
+        day_match = re.match(r"^(mandag|tirsdag|onsdag|torsdag|fredag)\b\s*[:|—-]?\s*(.*)$", raw, re.I)
         if day_match:
             current_day = day_match.group(1).lower()
             remainder = day_match.group(2).strip()
             current_section = None
             # Some PDF extractors keep a whole table row on one line.
-            section_match = re.search(r"\\b(lekser|husk)\\s*:?\\s*(.*)$", remainder, re.I)
+            section_match = re.search(r"\b(lekser|husk)\s*:?\s*(.*)$", remainder, re.I)
             if section_match:
                 current_section = "homework" if section_match.group(1).lower() == "lekser" else "reminders"
                 value = section_match.group(2).strip(" |:-")
@@ -278,7 +278,7 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
                     result[current_section][current_day] = value
             continue
 
-        section_match = re.match(r"^(lekser|husk)\\s*:?\\s*(.*)$", raw, re.I)
+        section_match = re.match(r"^(lekser|husk)\s*:?\s*(.*)$", raw, re.I)
         if section_match and current_day:
             current_section = "homework" if section_match.group(1).lower() == "lekser" else "reminders"
             value = section_match.group(2).strip(" |:-")
