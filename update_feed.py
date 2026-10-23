@@ -103,7 +103,7 @@ def choose_week(links: list[dict], current_week: int) -> dict:
         )
     def revision(item: dict) -> int:
         # The archive may list 0-uke_43.pdf and 1-uke_43.pdf; prefer the higher revision.
-        match = re.search(r"/(\\d+)-uke[_ -]?\\d+\\.(?:pdf|docx)(?:$|\\?)", item["url"], re.I)
+        match = re.search(r"/(\d+)-uke[_ -]?\d+\.(?:pdf|docx)(?:$|\?)", item["url"], re.I)
         return int(match.group(1)) if match else 0
 
     return max(eligible, key=lambda item: (item["week"], revision(item)))
