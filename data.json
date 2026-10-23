@@ -1,10 +1,10 @@
 {
-  "version": "3.4.0",
+  "version": "3.5.0",
   "week": "uke 43",
   "today_day": "fredag",
   "today_homework": "",
-  "next_day": "mandag",
-  "next_homework": "● Les tre ganger gjennom oppgave 1",
+  "next_day": "helg",
+  "next_homework": "",
   "note": "",
   "next_note": "",
   "homework": {
@@ -21,7 +21,7 @@
     "torsdag": "",
     "fredag": ""
   },
-  "generated_at": "2026-10-23T11:10+02:00",
+  "generated_at": "2026-10-23T11:46+02:00",
   "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf",
   "grade_4b": {
     "week": "uke 43",
@@ -39,6 +39,34 @@
       "torsdag": "4B husk bibliotekbøker",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/10/1-uke_43.pdf"
+    "source": "https://www.tingsakerskole.no/files/2026/10/1-uke_43.pdf",
+    "label": "4. klasse",
+    "today_day": "fredag",
+    "today_homework": "",
+    "next_day": "helg",
+    "next_homework": ""
+  },
+  "grade_1": {
+    "label": "1. klasse",
+    "week": "uke 43",
+    "today_day": "fredag",
+    "today_homework": "",
+    "next_day": "helg",
+    "next_homework": "",
+    "homework": {
+      "mandag": "● Les tre ganger gjennom oppgave 1",
+      "tirsdag": "● Les oppgave 1 en gang ● Gjør oppgave 2 og 3",
+      "onsdag": "● Gjør oppgavene 4 og 5 ● Les gjennom oppgave 1,2 og 3 en gang til.",
+      "torsdag": "Finn tre ting som har lydene v eller g i seg og vis dem til en voksen hjemme.",
+      "fredag": ""
+    },
+    "reminders": {
+      "mandag": "",
+      "tirsdag": "",
+      "onsdag": "",
+      "torsdag": "",
+      "fredag": ""
+    },
+    "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf"
   }
 }
