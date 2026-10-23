@@ -53,8 +53,9 @@ def next_for(homework: dict[str, str], today: str, next_week_homework: dict[str,
 def main(path: str = "data.json") -> None:
     target = Path(path)
     data = json.loads(target.read_text(encoding="utf-8"))
-    current_week = int(data["week"].split()[-1])
-    today = data["today_day"]
+    grade_1 = data["grade_1"]
+    current_week = int(grade_1["week"].split()[-1])
+    today = grade_1["today_day"]
 
     next_week_1 = None
     next_week_4b = None
@@ -66,20 +67,9 @@ def main(path: str = "data.json") -> None:
         if payload:
             next_week_4b = update_feed.extract_4b_sections(payload["text"])["homework"]
 
-    next_day, next_homework = next_for(data["homework"], today, next_week_1)
-    data["next_day"] = next_day
-    data["next_homework"] = next_homework
-    data["grade_1"] = {
-        "label": "1. klasse",
-        "week": data["week"],
-        "today_day": today,
-        "today_homework": data.get("today_homework", ""),
-        "next_day": next_day,
-        "next_homework": next_homework,
-        "homework": data["homework"],
-        "reminders": data.get("notes", {}),
-        "source": data.get("source", ""),
-    }
+    next_day, next_homework = next_for(grade_1["homework"], today, next_week_1)
+    grade_1["next_day"] = next_day
+    grade_1["next_homework"] = next_homework
 
     grade_4b = data.get("grade_4b")
     if grade_4b:
@@ -87,14 +77,15 @@ def main(path: str = "data.json") -> None:
         next4_day, next4_hw = next_for(hw4, today, next_week_4b)
         grade_4b.update({
             "label": "4. klasse",
+            "week": grade_4b.get("week") or grade_1["week"],
             "today_day": today,
             "today_homework": hw4.get(today, ""),
             "next_day": next4_day,
             "next_homework": next4_hw,
         })
 
-    data["version"] = "3.5.0"
-    target.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    data["version"] = update_feed.VERSION
+    target.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
 
 
 if __name__ == "__main__":
