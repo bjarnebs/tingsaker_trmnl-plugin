@@ -38,15 +38,15 @@ TRMNL-data publiseres i `data.json`. Klassefeltene ligger under hvert sitt objek
 | --- | --- |
 | `grade_1.homework` | Lekser for 1. trinn |
 | `grade_1.reminders` | «Husk»-meldinger for 1. trinn |
-| `grade_1.today_day` / `today_homework` | Dagens ukedag og lekser for 1. trinn |
-| `grade_1.next_day` / `next_homework` | Neste ukedag og lekser for 1. trinn |
+| `grade_1.today_day` / `grade_1.today_homework` | Dagens ukedag og lekser for 1. trinn |
+| `grade_1.next_day` / `grade_1.next_homework` | Neste ukedag og lekser for 1. trinn |
 | `grade_4b.homework` | Lekser for 4B |
 | `grade_4b.reminders` | «Husk»-meldinger for 4B |
 | `grade_4b.source` | Kilde til ukeplanen for 4B |
-| `grade_4b` dagsfelter | Dagens og neste dags lekser for 4B |
+| Dagsfelter under `grade_4b` | Dagens og neste dags lekser for 4B |
 | `version` / `generated_at` | Felles versjon og tidspunkt for generering |
 
-Det finnes ikke noe `due`-felt. De tidligere dupliserte klassefeltene på toppnivå er fjernet. Bruk `grade_1.*` og `grade_4b.*) i egne TRMNL-inputs og templates.
+Det finnes ikke noe `due`-felt. De tidligere dupliserte klassefeltene på toppnivå er fjernet. Bruk `grade_1.*` og `grade_4b.*` i egne TRMNL-inputs og templates.
 
 Hvis arkivet for 4B ikke kan leses, beholdes feeden for 1. trinn. 4B-feltene blir tomme, og JSON-dataene inneholder en feilmelding.
 
@@ -74,7 +74,7 @@ Se **Actions** i GitHub for resultatene fra automatiske tester og arkivkontrolle
 
 ## TRMNL-oppsett
 
-Legg prosjektfilene inn i roten av repositoryet, og konfigurer TRMNL til å hente `data.json` fra GitHub via raw-URL. Layoutene i repositoryet er laget for den nye datastrukturen med `grade_1` og `grade_4b`.
+Konfigurer TRMNL til å hente `data.json` fra GitHub via raw-URL. Layoutene i repositoryet er laget for den nye datastrukturen med `grade_1` og `grade_4b`.
 
 ## Prosjektfiler
 
