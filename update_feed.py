@@ -112,8 +112,8 @@ def choose_week(links: list[dict], current_week: int) -> dict:
 def extract_pdf(data: bytes, layout: bool = False) -> str:
     reader = PdfReader(io.BytesIO(data))
     if layout:
-        return "\\n".join(page.extract_text(extraction_mode="layout") or "" for page in reader.pages)
-    return "\\n".join(page.extract_text() or "" for page in reader.pages)
+        return "\n".join(page.extract_text(extraction_mode="layout") or "" for page in reader.pages)
+    return "\n".join(page.extract_text() or "" for page in reader.pages)
 
 
 def extract_docx(data: bytes) -> str:
