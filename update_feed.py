@@ -437,6 +437,9 @@ def main() -> None:
             result["grade_4b"] = build_4b_data(
                 chosen_4b["week"], text_4b, chosen_4b["url"]
             )
+            log.info("4B uttrekk kontroll: lekser=%s, husk=%s",
+                     {day: value for day, value in result["grade_4b"]["homework"].items() if value},
+                     {day: value for day, value in result["grade_4b"]["reminders"].items() if value})
         except Exception as exc:
             if "text_4b" in locals():
                 log.error("Uttrekket fra 4B-dokumentet (første 60 linjer):\\n%s", "\\n".join(text_4b.splitlines()[:60]))
