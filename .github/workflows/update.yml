@@ -32,8 +32,30 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Fetch latest published weekly plan
         run: python update_feed.py --out data.json
+      - name: Normalize generated feed
+        run: python normalize_data.py data.json
       - name: Validate generated feed
-        run: python -m json.tool data.json >/dev/null
+        run: |
+          python -m json.tool data.json >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("data.json").read_text(encoding="utf-8"))
+          assert data["grade_1"]["label"] == "1. klasse"
+          assert data["grade_4b"]["label"] == "4. klasse"
+          assert "today_homework" in data["grade_4b"]
+          assert "next_homework" in data["grade_4b"]
+          if data["today_day"] == "fredag":
+              assert data["next_day"] == "helg"
+              assert data["next_homework"] == ""
+          print("data.json OK:")
+          print("  uke:", data["week"])
+          print("  1. klasse:", data["today_day"], repr(data["grade_1"]["today_homework"]))
+          print("  4. klasse:", data["today_day"], repr(data["grade_4b"]["today_homework"]))
+          print("  neste:", data["next_day"], repr(data["next_homework"]))
+          print("  4B neste:", data["grade_4b"]["next_day"], repr(data["grade_4b"]["next_homework"]))
+          PY
       - name: Commit feed
         if: github.event_name != 'pull_request'
         run: |
@@ -54,12 +76,10 @@ jobs:
       - name: Audit every available 4B archive week
         run: |
           python - <<'PY'
-          from collections import defaultdict
           from update_feed import ARCHIVE_4B_URL, archive_links, extract_4b_sections, extract_text, fetch
 
           html = fetch(ARCHIVE_4B_URL).decode("utf-8", errors="replace")
           links = archive_links(html, ARCHIVE_4B_URL)
-          # Keep distinct files, including multiple revisions of the same week.
           unique = {item["url"]: item for item in links}
           if not unique:
               raise SystemExit("FEIL: Fant ingen ukeplaner i 4B-arkivet")
