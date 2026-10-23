@@ -259,7 +259,7 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
 
     for raw in lines:
         # Ignore a line specifically addressed to 4A, without losing later 4B rows.
-        if re.search(r"\\b4\\s*A\\b", raw, re.I):
+        if re.search(r"\b4\s*A\b", raw, re.I):
             continue
 
         lowered = raw.lower()
@@ -285,7 +285,7 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
                     result[current_section][current_day] = value
             continue
 
-        label_match = re.match(r"^(lekser|husk)\\b\\s*:?[ ]*(.*)$", raw, re.I)
+        label_match = re.match(r"^(lekser|husk)\b\s*:?[ ]*(.*)$", raw, re.I)
         if label_match and current_day:
             current_section = "homework" if label_match.group(1).lower() == "lekser" else "reminders"
             value = label_match.group(2).strip(" |:-")
