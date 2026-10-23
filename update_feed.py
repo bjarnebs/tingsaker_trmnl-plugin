@@ -250,7 +250,7 @@ def extract_notes(text: str) -> dict[str, str]:
 def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
     """Parse the 4B table into separate homework and reminder fields.
 
-    Only text in an explicitly labelled Lekser or Husk section is accepted.
+    Only text in an explicitly labelled Lekser or Husk section is accepted.\n    Input lines are normalized before matching so PDF/DOCX whitespace is tolerated.
     This deliberately avoids treating general school information as homework.
     """
     result = {
