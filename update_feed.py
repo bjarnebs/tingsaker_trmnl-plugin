@@ -296,6 +296,10 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
                 continue
             homework_cell = raw[homework_start:reminders_start].strip() if len(raw) > homework_start else ""
             reminder_cell = raw[reminders_start:].strip() if len(raw) > reminders_start else ""
+            # The PDF places a separate 4A reminder in the same visual column;
+            # exclude it from 4B, and normalize the explicit 4B label.
+            reminder_cell = re.sub(r"\b4\s*A\s+husk\b.*$", "", reminder_cell, flags=re.I).strip()
+            reminder_cell = re.sub(r"^4\s*B\s+husk\b\s*", "", reminder_cell, flags=re.I).strip()
             # Ignore the short instruction printed above the weekday rows.
             if re.search(r"Matteleksen må helst|Husk å lese hver dag", raw, re.I):
                 continue
