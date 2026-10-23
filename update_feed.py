@@ -111,7 +111,9 @@ def choose_week(links: list[dict], current_week: int) -> dict:
 
 def extract_pdf(data: bytes) -> str:
     reader = PdfReader(io.BytesIO(data))
-    return "\n".join(page.extract_text() or "" for page in reader.pages)
+    # Layout mode preserves the PDF table columns better than content-stream order,
+    # which is essential for keeping the 4B Lekse and Husk columns separate.
+    return "\n".join(page.extract_text(extraction_mode="layout") or "" for page in reader.pages)
 
 
 def extract_docx(data: bytes) -> str:
