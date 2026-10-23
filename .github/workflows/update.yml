@@ -1,6 +1,7 @@
 name: Update Tingsaker homework
 
 on:
+  pull_request:
   workflow_dispatch:
   schedule:
     # 07:15 Oslo in summer time, 06:15 in winter time.
