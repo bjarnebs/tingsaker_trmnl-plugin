@@ -1,28 +1,6 @@
 {
-  "version": "3.5.0",
-  "week": "uke 43",
-  "today_day": "fredag",
-  "today_homework": "",
-  "next_day": "helg",
-  "next_homework": "",
-  "note": "",
-  "next_note": "",
-  "homework": {
-    "mandag": "● Les tre ganger gjennom oppgave 1",
-    "tirsdag": "● Les oppgave 1 en gang ● Gjør oppgave 2 og 3",
-    "onsdag": "● Gjør oppgavene 4 og 5 ● Les gjennom oppgave 1,2 og 3 en gang til.",
-    "torsdag": "Finn tre ting som har lydene v eller g i seg og vis dem til en voksen hjemme.",
-    "fredag": ""
-  },
-  "notes": {
-    "mandag": "",
-    "tirsdag": "",
-    "onsdag": "",
-    "torsdag": "",
-    "fredag": ""
-  },
+  "version": "3.5.1",
   "generated_at": "2026-10-23T11:46+02:00",
-  "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf",
   "grade_4b": {
     "week": "uke 43",
     "homework": {
