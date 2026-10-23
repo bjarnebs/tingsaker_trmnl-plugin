@@ -429,13 +429,15 @@ def main() -> None:
             html_4b = fetch(ARCHIVE_4B_URL).decode("utf-8", errors="replace")
             links_4b = archive_links(html_4b, ARCHIVE_4B_URL)
             chosen_4b = choose_week(links_4b, week)
+            log.info("Valgt 4B uke %s: %s", chosen_4b["week"], chosen_4b["url"])
             raw_4b = fetch(chosen_4b["url"])
             text_4b = extract_text(chosen_4b["url"], raw_4b)
             result["grade_4b"] = build_4b_data(
                 chosen_4b["week"], text_4b, chosen_4b["url"]
             )
-            log.info("Valgt 4B uke %s: %s", chosen_4b["week"], chosen_4b["url"])
         except Exception as exc:
+            if "text_4b" in locals():
+                log.error("Uttrekket fra 4B-dokumentet (første 60 linjer):\\n%s", "\\n".join(text_4b.splitlines()[:60]))
             # Do not discard a working 1st-grade feed if the separate 4B
             # archive temporarily fails; record the problem in the feed.
             log.exception("Klarte ikke å oppdatere 4B")
