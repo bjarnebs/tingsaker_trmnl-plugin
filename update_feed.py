@@ -424,7 +424,7 @@ def validate_data(data: dict) -> None:
         if grade_key not in data:
             continue
         grade = data[grade_key]
-        if not re.fullmatch(r"uke \\d{1,2}", str(grade.get("week", ""))):
+        if not re.fullmatch(r"uke \d{1,2}", str(grade.get("week", ""))):
             raise ValueError(f"Ugyldig ukeformat i {grade_key}.")
         for field in ("homework", "reminders"):
             if set(grade.get(field, {})) != set(DAYS):
