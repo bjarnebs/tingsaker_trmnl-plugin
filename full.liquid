@@ -5,7 +5,7 @@
     {% if grade_1.today_homework and grade_1.today_homework != "" %}<div class="value">{{ grade_1.today_homework }}</div>{% else %}<div class="value">Ingen lekser oppført.</div>{% endif %}
     {% if grade_1.reminders[grade_1.today_day] and grade_1.reminders[grade_1.today_day] != "" %}<div class="label">ℹ️ {{ grade_1.reminders[grade_1.today_day] }}</div>{% endif %}
     <hr>
-    <h2>4B · {{ grade_1.today_day }}</h2>
+    <h2>4B · {{ grade_4b.today_day }}</h2>
     {% if grade_4b.homework[grade_4b.today_day] and grade_4b.homework[grade_4b.today_day] != "" %}<div class="value">Lekser: {{ grade_4b.homework[grade_4b.today_day] }}</div>{% else %}<div class="label">Lekser: Ingen oppført.</div>{% endif %}
     {% if grade_4b.reminders[grade_4b.today_day] and grade_4b.reminders[grade_4b.today_day] != "" %}<div class="label">Husk: {{ grade_4b.reminders[grade_4b.today_day] }}</div>{% endif %}
   </div>
