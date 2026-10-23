@@ -33,6 +33,8 @@ def test_week42(tmp_path):
     assert "due" not in data
     assert not ({"week", "homework", "notes", "today_homework", "today_day", "source"} & data.keys())
     assert data["grade_1"]["label"] == "1. klasse"
+    assert not ({"week", "homework", "notes", "today_homework", "today_day", "source"} & data.keys())
+    assert data["grade_1"]["label"] == "1. klasse"
 
 
 def test_variant_labels_are_supported():
@@ -95,8 +97,7 @@ def test_atomic_output_validation(tmp_path):
             "label": "1. klasse", "week": "uke 42", "today_day": "mandag",
             "today_homework": "", "next_day": "", "next_homework": "",
             "homework": {d: "" for d in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]},
-            "reminders": {d: "" for d in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]},
-            "source": "test",
+            "reminders": {d: "" for d in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]}, "source": "test",
         },
     }
     write_json_atomic(path, data)
