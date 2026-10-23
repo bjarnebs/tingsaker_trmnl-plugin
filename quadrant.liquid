@@ -3,7 +3,7 @@
   <div class="label">1. trinn · {{ grade_1.today_day }}</div>
   <div class="value">{% if grade_1.today_homework %}{{ grade_1.today_homework }}{% else %}Ingen lekser oppført.{% endif %}</div>
   <hr>
-  <div class="label">4B · {{ grade_1.today_day }}</div>
+  <div class="label">4B · {{ grade_4b.today_day }}</div>
   <div class="value">Lekser: {% if grade_4b.homework[grade_4b.today_day] %}{{ grade_4b.homework[grade_4b.today_day] }}{% else %}Ingen oppført.{% endif %}</div>
   {% if grade_4b.reminders[grade_4b.today_day] %}<div class="label">Husk: {{ grade_4b.reminders[grade_4b.today_day] }}</div>{% endif %}
 </div>
