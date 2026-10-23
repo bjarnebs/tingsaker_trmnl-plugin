@@ -248,7 +248,10 @@ def extract_notes(text: str) -> dict[str, str]:
 
 
 def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
-    """Parse 4B homework and reminders without combining the two columns."""
+    """Parse 4B homework and reminders without combining the two columns.
+
+Accepts extracted text from PDF and DOCX sources.
+"""
     result = {
         "homework": {day: "" for day in DAYS},
         "reminders": {day: "" for day in DAYS},
