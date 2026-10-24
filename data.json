@@ -1,11 +1,11 @@
 {
-  "version": "3.6.0",
-  "generated_at": "2026-10-24T10:15+02:00",
+  "version": "3.7.0",
+  "generated_at": "2026-10-24T11:03+02:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 43",
     "today_day": "lørdag",
-    "today_homework": "",
+    "today_homework": "Leksefri",
     "next_day": "helg",
     "next_homework": "",
     "homework": {
