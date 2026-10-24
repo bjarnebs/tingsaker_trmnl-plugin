@@ -127,3 +127,14 @@ def test_normal_week_does_not_preview_monday():
     data = build_data(43, homework, "test")
     from update_feed import day_name, now_oslo
     assert data["grade_1"]["today_day"] == day_name(now_oslo().date())
+
+
+
+def test_weekend_labels_are_real_days_and_homework_free():
+    from datetime import date
+    from update_feed import next_with_homework
+
+    homework = {day: "" for day in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]}
+    assert next_with_homework(homework, date(2026, 10, 24)) == ("søndag", "Leksefri")
+    assert next_with_homework(homework, date(2026, 10, 25)) == ("mandag", "")
+    assert next_with_homework(homework, date(2026, 10, 23)) == ("lørdag", "Leksefri")
