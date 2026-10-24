@@ -102,3 +102,28 @@ def test_atomic_output_validation(tmp_path):
     }
     write_json_atomic(path, data)
     assert json.loads(path.read_text())["version"] == "3.5.1"
+
+
+def test_sunday_preview_uses_monday_homework_and_reminders():
+    from update_feed import build_data
+
+    homework = {day: "" for day in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]}
+    reminders = {day: "" for day in homework}
+    homework["mandag"] = "Ta med gymtøy"
+    reminders["mandag"] = "Husk innesko"
+
+    data = build_data(44, homework, "test", reminders, preview_next_week=True)
+    grade = data["grade_1"]
+    assert grade["week"] == "uke 44"
+    assert grade["today_day"] == "mandag"
+    assert grade["today_homework"] == "Ta med gymtøy"
+    assert grade["reminders"]["mandag"] == "Husk innesko"
+
+
+def test_normal_week_does_not_preview_monday():
+    from update_feed import build_data
+
+    homework = {day: "" for day in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]}
+    data = build_data(43, homework, "test")
+    from update_feed import day_name, now_oslo
+    assert data["grade_1"]["today_day"] == day_name(now_oslo().date())
