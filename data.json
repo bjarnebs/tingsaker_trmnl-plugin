@@ -1,10 +1,10 @@
 {
   "version": "3.5.1",
-  "generated_at": "2026-10-23T13:36+02:00",
+  "generated_at": "2026-10-24T07:45+02:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 43",
-    "today_day": "fredag",
+    "today_day": "lørdag",
     "today_homework": "",
     "next_day": "helg",
     "next_homework": "",
@@ -42,7 +42,7 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/10/1-uke_43.pdf",
-    "today_day": "fredag",
+    "today_day": "lørdag",
     "today_homework": "",
     "next_day": "helg",
     "next_homework": ""
