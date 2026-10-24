@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from docx import Document
 from pypdf import PdfReader
 
-VERSION = "3.5.1"
+VERSION = "3.6.0"
 ARCHIVE_URL = "https://www.tingsakerskole.no/?show=field&fid=1369&sort=2&showfrom=0&showcount=-1"
 ARCHIVE_4B_URL = "https://www.tingsakerskole.no/?show=field&fid=1324&sort=2&showfrom=0&showcount=-1"
 DAYS = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]
@@ -359,9 +359,11 @@ def extract_4b_sections(text: str) -> dict[str, dict[str, str]]:
         raise ValueError("Fant ikke tydelige Lekser/Husk-felt i 4B-planen.")
     return result
 
-def build_4b_data(week: int, text: str, source_url: str) -> dict:
+def build_4b_data(
+    week: int, text: str, source_url: str, preview_next_week: bool = False
+) -> dict:
     sections = extract_4b_sections(text)
-    today_name = day_name(now_oslo().date())
+    today_name = "mandag" if preview_next_week else day_name(now_oslo().date())
     next_day, next_hw = next_with_homework(sections["homework"], now_oslo().date())
     return {
         "label": "4. klasse", "week": f"uke {week}",
@@ -394,10 +396,12 @@ def build_data(
     homework: dict[str, str],
     source_url: str,
     notes: dict[str, str] | None = None,
+    preview_next_week: bool = False,
 ) -> dict:
     notes = notes or {day: "" for day in DAYS}
     now = now_oslo()
-    today_name = day_name(now.date())
+    # On Sundays, show Monday of the next week when that plan is published.
+    today_name = "mandag" if preview_next_week else day_name(now.date())
     next_day, next_hw = next_with_homework(homework, now.date())
 
     return {
@@ -465,8 +469,15 @@ def main() -> None:
     else:
         html = fetch(args.archive).decode("utf-8", errors="replace")
         links = archive_links(html)
-        current_week = args.week or now_oslo().isocalendar().week
-        chosen = choose_week(links, current_week)
+        today = now_oslo().date()
+        current_week = args.week or today.isocalendar().week
+        # The next school week should be visible on Sunday, so families can
+        # prepare Monday's homework and reminders before the school week starts.
+        target_week = current_week
+        if args.week is None and today.weekday() == 6:
+            target_week = (today + timedelta(days=1)).isocalendar().week
+        chosen = choose_week(links, target_week)
+        preview_next_week = chosen["week"] != current_week
         log.info("Valgt uke %s: %s", chosen["week"], chosen["url"])
         raw = fetch(chosen["url"])
         text = extract_text(chosen["url"], raw)
@@ -474,7 +485,10 @@ def main() -> None:
         source_url = chosen["url"]
 
     homework = extract_homework(text)
-    result = build_data(week, homework, source_url, extract_notes(text))
+    result = build_data(
+        week, homework, source_url, extract_notes(text),
+        preview_next_week=(not args.pdf and locals().get("preview_next_week", False)),
+    )
 
     if not args.pdf:
         try:
@@ -486,7 +500,12 @@ def main() -> None:
             text_4b = extract_text(chosen_4b["url"], raw_4b, layout=True)
             log.info("4B PDF-uttrekk (første 100 linjer):\n%s", "\n".join(text_4b.splitlines()[:100]))
             result["grade_4b"] = build_4b_data(
-                chosen_4b["week"], text_4b, chosen_4b["url"]
+                chosen_4b["week"], text_4b, chosen_4b["url"],
+                preview_next_week=(
+                    not args.pdf
+                    and locals().get("preview_next_week", False)
+                    and chosen_4b["week"] != current_week
+                ),
             )
             log.info("4B uttrekk kontroll: lekser=%s, husk=%s",
                      {day: value for day, value in result["grade_4b"]["homework"].items() if value},
