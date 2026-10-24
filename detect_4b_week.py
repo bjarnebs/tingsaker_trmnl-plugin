@@ -87,8 +87,8 @@ def detect_mislabelled_4b(links: list[dict], current_week: int, load_text) -> tu
         return None, None
 
     older, newer = candidates[-2], candidates[-1]
-    old_text = load_text(older)
-    new_text = load_text(newer)
+    old_text = load_text(older["url"])
+    new_text = load_text(newer["url"])
     if content_signature(old_text) == content_signature(new_text):
         return None, None
 
@@ -113,9 +113,9 @@ def repair_data(data_path: Path, current_week: int, archive_url: str = ARCHIVE_4
     html = fetch(archive_url).decode("utf-8", errors="replace")
     links = archive_candidates(html, archive_url)
 
-    def load_text(item):
-        raw = fetch(item["url"])
-        return extract_text(item["url"], raw, layout=True)
+    def load_text(url):
+        raw = fetch(url)
+        return extract_text(url, raw, layout=True)
 
     chosen, warning = detect_mislabelled_4b(links, current_week, load_text)
     if warning:
@@ -123,7 +123,7 @@ def repair_data(data_path: Path, current_week: int, archive_url: str = ARCHIVE_4
     if not chosen:
         return False
 
-    text = load_text(chosen)
+    text = load_text(chosen["url"])
     sections = extract_4b_sections(text)
     grade = data["grade_4b"]
     grade["week"] = f"uke {current_week}"
