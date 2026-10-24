@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 from docx import Document
 from pypdf import PdfReader
 
-VERSION = "3.6.0"
+VERSION = "3.7.0"
 ARCHIVE_URL = "https://www.tingsakerskole.no/?show=field&fid=1369&sort=2&showfrom=0&showcount=-1"
 ARCHIVE_4B_URL = "https://www.tingsakerskole.no/?show=field&fid=1324&sort=2&showfrom=0&showcount=-1"
 DAYS = ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]
@@ -363,13 +363,15 @@ def build_4b_data(
     week: int, text: str, source_url: str, preview_next_week: bool = False
 ) -> dict:
     sections = extract_4b_sections(text)
-    today_name = "mandag" if preview_next_week else day_name(now_oslo().date())
-    next_day, next_hw = next_with_homework(sections["homework"], now_oslo().date())
+    today_date = now_oslo().date()
+    today_name = day_name(today_date)
+    today_hw = "Leksefri" if today_name in ("lørdag", "søndag") else sections["homework"].get(today_name, "")
+    next_day, next_hw = next_with_homework(sections["homework"], today_date)
     return {
         "label": "4. klasse", "week": f"uke {week}",
         "homework": sections["homework"], "reminders": sections["reminders"],
         "source": source_url, "today_day": today_name,
-        "today_homework": sections["homework"].get(today_name, ""),
+        "today_homework": today_hw,
         "next_day": next_day, "next_homework": next_hw,
     }
 
@@ -383,12 +385,12 @@ def day_name(value: date) -> str:
 
 
 def next_with_homework(homework: dict[str, str], today: date) -> tuple[str, str]:
-    for delta in range(1, 8):
-        target = today + timedelta(days=delta)
-        name = day_name(target)
-        if name in homework and homework[name]:
-            return name, homework[name]
-    return "", ""
+    """Return the next calendar day, marking weekends as homework-free."""
+    target = today + timedelta(days=1)
+    name = day_name(target)
+    if name in ("lørdag", "søndag"):
+        return name, "Leksefri"
+    return name, homework.get(name, "")
 
 
 def build_data(
@@ -400,8 +402,8 @@ def build_data(
 ) -> dict:
     notes = notes or {day: "" for day in DAYS}
     now = now_oslo()
-    # On Sundays, show Monday of the next week when that plan is published.
-    today_name = "mandag" if preview_next_week else day_name(now.date())
+    today_name = day_name(now.date())
+    today_hw = "Leksefri" if today_name in ("lørdag", "søndag") else homework.get(today_name, "")
     next_day, next_hw = next_with_homework(homework, now.date())
 
     return {
@@ -409,7 +411,7 @@ def build_data(
         "generated_at": now.isoformat(timespec="minutes"),
         "grade_1": {
             "label": "1. klasse", "week": f"uke {week}",
-            "today_day": today_name, "today_homework": homework.get(today_name, ""),
+            "today_day": today_name, "today_homework": today_hw,
             "next_day": next_day, "next_homework": next_hw,
             "homework": homework, "reminders": notes, "source": source_url,
         },
