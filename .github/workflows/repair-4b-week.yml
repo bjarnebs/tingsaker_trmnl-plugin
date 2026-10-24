@@ -21,7 +21,14 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - name: Detect and repair likely mislabelled 4B week
-        run: python detect_4b_week.py --data data.json --week "$(date -u +%V)"
+        run: |
+          WEEK=$(python - <<'PY'
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          print(datetime.now(ZoneInfo("Europe/Oslo")).isocalendar().week)
+          PY
+          )
+          python detect_4b_week.py --data data.json --week "$WEEK"
       - name: Commit repaired feed
         run: |
           git config user.name "github-actions[bot]"
