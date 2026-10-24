@@ -104,8 +104,15 @@ def test_atomic_output_validation(tmp_path):
     assert json.loads(path.read_text())["version"] == "3.5.1"
 
 
-def test_sunday_preview_uses_monday_homework_and_reminders():
+def test_sunday_preview_uses_monday_homework_and_reminders(monkeypatch):
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    import update_feed
     from update_feed import build_data
+
+    # Make this test genuinely run as a Sunday preview, regardless of CI day.
+    sunday = datetime(2026, 10, 25, 12, 0, tzinfo=ZoneInfo("Europe/Oslo"))
+    monkeypatch.setattr(update_feed, "now_oslo", lambda: sunday)
 
     homework = {day: "" for day in ["mandag", "tirsdag", "onsdag", "torsdag", "fredag"]}
     reminders = {day: "" for day in homework}
@@ -115,8 +122,10 @@ def test_sunday_preview_uses_monday_homework_and_reminders():
     data = build_data(44, homework, "test", reminders, preview_next_week=True)
     grade = data["grade_1"]
     assert grade["week"] == "uke 44"
-    assert grade["today_day"] == "mandag"
-    assert grade["today_homework"] == "Ta med gymtøy"
+    assert grade["today_day"] == "søndag"
+    assert grade["today_homework"] == "Leksefri"
+    assert grade["next_day"] == "mandag"
+    assert grade["next_homework"] == "Ta med gymtøy"
     assert grade["reminders"]["mandag"] == "Husk innesko"
 
 
