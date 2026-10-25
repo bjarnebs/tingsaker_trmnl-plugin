@@ -1,18 +1,18 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-10-24T11:03+02:00",
+  "generated_at": "2026-10-25T06:43+01:00",
   "grade_1": {
     "label": "1. klasse",
-    "week": "uke 43",
-    "today_day": "lørdag",
+    "week": "uke 44",
+    "today_day": "søndag",
     "today_homework": "Leksefri",
     "next_day": "helg",
     "next_homework": "",
     "homework": {
-      "mandag": "● Les tre ganger gjennom oppgave 1",
-      "tirsdag": "● Les oppgave 1 en gang ● Gjør oppgave 2 og 3",
-      "onsdag": "● Gjør oppgavene 4 og 5 ● Les gjennom oppgave 1,2 og 3 en gang til.",
-      "torsdag": "Finn tre ting som har lydene v eller g i seg og vis dem til en voksen hjemme.",
+      "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
+      "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
+      "onsdag": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør andre siden av leksa.",
+      "torsdag": "Finn tre ting på h og tre ting på j og vis dem til en voksen hjemme.",
       "fredag": ""
     },
     "reminders": {
@@ -22,7 +22,7 @@
       "torsdag": "",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/10/43.pdf"
+    "source": "https://www.tingsakerskole.no/files/2026/10/44.pdf"
   },
   "grade_4b": {
     "label": "4. klasse",
@@ -42,7 +42,7 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/10/1-uke_43.pdf",
-    "today_day": "lørdag",
+    "today_day": "søndag",
     "today_homework": "",
     "next_day": "helg",
     "next_homework": ""
