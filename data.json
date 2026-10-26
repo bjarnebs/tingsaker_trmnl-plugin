@@ -1,13 +1,13 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-10-25T06:43+01:00",
+  "generated_at": "2026-10-26T06:49+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 44",
-    "today_day": "søndag",
-    "today_homework": "Leksefri",
-    "next_day": "helg",
-    "next_homework": "",
+    "today_day": "mandag",
+    "today_homework": "Les første side av leseleksa (merket forøvelse) tre ganger.",
+    "next_day": "tirsdag",
+    "next_homework": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
     "homework": {
       "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
       "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
@@ -26,25 +26,25 @@
   },
   "grade_4b": {
     "label": "4. klasse",
-    "week": "uke 43",
+    "week": "uke 44",
     "homework": {
       "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Bruk elevens Feide-innlogging. Øv på 6-9 gangen, bruk arket eller øv på gangesanger på youtube",
-      "tirsdag": "Les teksten om adjektiv to ganger sammen med en voksen, og få underskrift på at dette er gjort.",
-      "onsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Engelsk: Les s. 52-53 høyt for en voksen. Snakk sammen - hva handlet teksten om? Prøv å oversette en av sidene til norsk.",
-      "torsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Gjør side 41 i Norsk arbeidsbok.",
-      "fredag": ""
+      "tirsdag": "Øv på 6-9 gangen, bruk arket eller øv på gangesanger på youtube",
+      "onsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Engelsk: les s. 61 høyt for en voksen. Snakk sammen - hva handlet teksten om?",
+      "torsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Gjør side 46 i Norsk arbeidsbok.",
+      "fredag": "God helg 🙂"
     },
     "reminders": {
       "mandag": "Ta med gymsko",
       "tirsdag": "",
       "onsdag": "Badetøy for de som vil. 4A husk bibliotekbøker",
-      "torsdag": "4B husk bibliotekbøker",
+      "torsdag": "Legg Flaskepostbok i sekken Husk bibliotekbøker",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/10/1-uke_43.pdf",
-    "today_day": "søndag",
-    "today_homework": "",
-    "next_day": "helg",
-    "next_homework": ""
+    "source": "https://www.tingsakerskole.no/files/2026/10/uke_44.pdf",
+    "today_day": "mandag",
+    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Bruk elevens Feide-innlogging. Øv på 6-9 gangen, bruk arket eller øv på gangesanger på youtube",
+    "next_day": "tirsdag",
+    "next_homework": "Øv på 6-9 gangen, bruk arket eller øv på gangesanger på youtube"
   }
 }
