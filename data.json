@@ -1,13 +1,13 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-10-28T06:54+01:00",
+  "generated_at": "2026-10-29T06:55+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 44",
-    "today_day": "onsdag",
-    "today_homework": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør andre siden av leksa.",
-    "next_day": "torsdag",
-    "next_homework": "Finn tre ting på h og tre ting på j og vis dem til en voksen hjemme.",
+    "today_day": "torsdag",
+    "today_homework": "Finn tre ting på h og tre ting på j og vis dem til en voksen hjemme.",
+    "next_day": "helg",
+    "next_homework": "",
     "homework": {
       "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
       "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
@@ -42,9 +42,9 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/10/uke_44.pdf",
-    "today_day": "onsdag",
-    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Engelsk: les s. 61 høyt for en voksen. Snakk sammen - hva handlet teksten om?",
-    "next_day": "torsdag",
-    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Gjør side 46 i Norsk arbeidsbok."
+    "today_day": "torsdag",
+    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Gjør side 46 i Norsk arbeidsbok.",
+    "next_day": "helg",
+    "next_homework": ""
   }
 }
