@@ -1,13 +1,13 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-01T06:55+01:00",
+  "generated_at": "2026-11-02T07:15+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 45",
-    "today_day": "søndag",
-    "today_homework": "Leksefri",
-    "next_day": "helg",
-    "next_homework": "",
+    "today_day": "mandag",
+    "today_homework": "Gjør første side av leksearket. Ligger i leksemappa. ● Skriv bokstaven k og si bokstavlyden samtidig. ● Bruk “lesefinger” og les bokstaven. Les 3 ganger og sett et kryss hver gang.",
+    "next_day": "tirsdag",
+    "next_homework": "Gjør andre siden av leksearket. leksearket. Ligger i leksemappa.",
     "homework": {
       "mandag": "Gjør første side av leksearket. Ligger i leksemappa. ● Skriv bokstaven k og si bokstavlyden samtidig. ● Bruk “lesefinger” og les bokstaven. Les 3 ganger og sett et kryss hver gang.",
       "tirsdag": "Gjør andre siden av leksearket. leksearket. Ligger i leksemappa.",
@@ -26,25 +26,25 @@
   },
   "grade_4b": {
     "label": "4. klasse",
-    "week": "uke 44",
+    "week": "uke 45",
     "homework": {
-      "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Bruk elevens Feide-innlogging. Øv på 6-9 gangen, bruk arket eller øv på gangesanger på youtube",
-      "tirsdag": "Øv på 6-9 gangen, bruk arket eller øv på gangesanger på youtube",
-      "onsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Engelsk: les s. 61 høyt for en voksen. Snakk sammen - hva handlet teksten om?",
-      "torsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Gjør side 46 i Norsk arbeidsbok.",
-      "fredag": "God helg 🙂"
+      "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Bruk elevens Feide-innlogging. Få underskrift i Flaskepostboka. Gjør matematikkarket du har fått utdelt.",
+      "tirsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 43 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 88 i Norsk lesebok to ganger sammen med en voksen hjemme. Bytt på rollene.",
+      "onsdag": "LEKSEFRI",
+      "torsdag": "",
+      "fredag": ""
     },
     "reminders": {
       "mandag": "Ta med gymsko",
       "tirsdag": "",
-      "onsdag": "Badetøy for de som vil. 4A husk bibliotekbøker",
-      "torsdag": "Legg Flaskepostbok i sekken Husk bibliotekbøker",
+      "onsdag": "Flaskepostboka Bålmat og klær for å dra på tur.",
+      "torsdag": "",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/10/uke_44.pdf",
-    "today_day": "søndag",
-    "today_homework": "",
-    "next_day": "helg",
-    "next_homework": ""
+    "source": "https://www.tingsakerskole.no/files/2026/11/uke_45_1.pdf",
+    "today_day": "mandag",
+    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Bruk elevens Feide-innlogging. Få underskrift i Flaskepostboka. Gjør matematikkarket du har fått utdelt.",
+    "next_day": "tirsdag",
+    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 43 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 88 i Norsk lesebok to ganger sammen med en voksen hjemme. Bytt på rollene."
   }
 }
