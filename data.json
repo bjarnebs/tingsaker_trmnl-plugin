@@ -1,12 +1,12 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-03T07:04+01:00",
+  "generated_at": "2026-11-04T07:11+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 45",
-    "today_day": "tirsdag",
-    "today_homework": "Gjør andre siden av leksearket. leksearket. Ligger i leksemappa.",
-    "next_day": "onsdag",
+    "today_day": "onsdag",
+    "today_homework": "",
+    "next_day": "torsdag",
     "next_homework": "",
     "homework": {
       "mandag": "Gjør første side av leksearket. Ligger i leksemappa. ● Skriv bokstaven k og si bokstavlyden samtidig. ● Bruk “lesefinger” og les bokstaven. Les 3 ganger og sett et kryss hver gang.",
@@ -42,9 +42,9 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/uke_45_1.pdf",
-    "today_day": "tirsdag",
-    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 43 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 88 i Norsk lesebok to ganger sammen med en voksen hjemme. Bytt på rollene.",
-    "next_day": "onsdag",
-    "next_homework": "LEKSEFRI"
+    "today_day": "onsdag",
+    "today_homework": "LEKSEFRI",
+    "next_day": "torsdag",
+    "next_homework": ""
   }
 }
