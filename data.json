@@ -1,11 +1,11 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-06T07:12+01:00",
+  "generated_at": "2026-11-07T06:57+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 45",
-    "today_day": "fredag",
-    "today_homework": "",
+    "today_day": "lørdag",
+    "today_homework": "Leksefri",
     "next_day": "helg",
     "next_homework": "",
     "homework": {
@@ -42,7 +42,7 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/uke_45_1.pdf",
-    "today_day": "fredag",
+    "today_day": "lørdag",
     "today_homework": "",
     "next_day": "helg",
     "next_homework": ""
