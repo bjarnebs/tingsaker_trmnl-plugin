@@ -1,18 +1,18 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-07T06:57+01:00",
+  "generated_at": "2026-11-08T06:58+01:00",
   "grade_1": {
     "label": "1. klasse",
-    "week": "uke 45",
-    "today_day": "lørdag",
+    "week": "uke 46",
+    "today_day": "søndag",
     "today_homework": "Leksefri",
     "next_day": "helg",
     "next_homework": "",
     "homework": {
-      "mandag": "Gjør første side av leksearket. Ligger i leksemappa. ● Skriv bokstaven k og si bokstavlyden samtidig. ● Bruk “lesefinger” og les bokstaven. Les 3 ganger og sett et kryss hver gang.",
-      "tirsdag": "Gjør andre siden av leksearket. leksearket. Ligger i leksemappa.",
-      "onsdag": "",
-      "torsdag": "",
+      "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
+      "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
+      "onsdag": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør andre siden av leksa.",
+      "torsdag": "Finn tre ting på t og tre ting på d og vis dem til en voksen hjemme.",
       "fredag": ""
     },
     "reminders": {
@@ -22,7 +22,7 @@
       "torsdag": "",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/10/uke_45.pdf"
+    "source": "https://www.tingsakerskole.no/files/2026/11/46.pdf"
   },
   "grade_4b": {
     "label": "4. klasse",
@@ -42,7 +42,7 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/uke_45_1.pdf",
-    "today_day": "lørdag",
+    "today_day": "søndag",
     "today_homework": "",
     "next_day": "helg",
     "next_homework": ""
