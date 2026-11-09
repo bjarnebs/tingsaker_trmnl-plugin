@@ -1,13 +1,13 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-08T06:58+01:00",
+  "generated_at": "2026-11-09T07:19+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 46",
-    "today_day": "søndag",
-    "today_homework": "Leksefri",
-    "next_day": "helg",
-    "next_homework": "",
+    "today_day": "mandag",
+    "today_homework": "Les første side av leseleksa (merket forøvelse) tre ganger.",
+    "next_day": "tirsdag",
+    "next_homework": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
     "homework": {
       "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
       "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
@@ -26,25 +26,25 @@
   },
   "grade_4b": {
     "label": "4. klasse",
-    "week": "uke 45",
+    "week": "uke 46",
     "homework": {
-      "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Registrer på norlijunior. Bruk elevens Feide-innlogging. Få underskrift i Flaskepostboka. Gjør matematikkarket du har fått utdelt.",
-      "tirsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 43 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 88 i Norsk lesebok to ganger sammen med en voksen hjemme. Bytt på rollene.",
-      "onsdag": "LEKSEFRI",
-      "torsdag": "",
+      "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Få underskrift i Flaskepostboka Øv på 2-10 gangen, bruk arket eller øv på gangesanger på youtube. Fokuser på de som du synes er vanskeligst.",
+      "tirsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 40 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 87 i Norsk lesebok to ganger sammen med en voksen hjemme. Øv på stemmebruk, hvordan skal du bruke den, når skal du ha pauser i lesingen.",
+      "onsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Øv på 2-10 gangen, bruk arket eller øv på gangesanger på youtube. Fokuser på de som du synes er vanskeligst.",
+      "torsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Øveark ord med sj-lyd som skrives med sk-.",
       "fredag": ""
     },
     "reminders": {
-      "mandag": "Ta med gymsko",
+      "mandag": "Ta med gymsko (4B)",
       "tirsdag": "",
-      "onsdag": "Flaskepostboka Bålmat og klær for å dra på tur.",
-      "torsdag": "",
+      "onsdag": "Badetøy for vinterbaderne 🙂",
+      "torsdag": "Ta med gymsko (4A)",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/11/uke_45_1.pdf",
-    "today_day": "søndag",
-    "today_homework": "",
-    "next_day": "helg",
-    "next_homework": ""
+    "source": "https://www.tingsakerskole.no/files/2026/11/0-uke_46_1.pdf",
+    "today_day": "mandag",
+    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Få underskrift i Flaskepostboka Øv på 2-10 gangen, bruk arket eller øv på gangesanger på youtube. Fokuser på de som du synes er vanskeligst.",
+    "next_day": "tirsdag",
+    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 40 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 87 i Norsk lesebok to ganger sammen med en voksen hjemme. Øv på stemmebruk, hvordan skal du bruke den, når skal du ha pauser i lesingen."
   }
 }
