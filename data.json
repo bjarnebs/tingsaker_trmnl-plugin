@@ -1,13 +1,13 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-09T07:19+01:00",
+  "generated_at": "2026-11-10T07:04+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 46",
-    "today_day": "mandag",
-    "today_homework": "Les første side av leseleksa (merket forøvelse) tre ganger.",
-    "next_day": "tirsdag",
-    "next_homework": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
+    "today_day": "tirsdag",
+    "today_homework": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
+    "next_day": "onsdag",
+    "next_homework": "Les tegneserien og jobb med spørsmålene (merket etterarbeid) muntlig. Gjør andre siden av leksa.",
     "homework": {
       "mandag": "Les første side av leseleksa (merket forøvelse) tre ganger.",
       "tirsdag": "Les første side av leseleksa (merket forøvelse) en gang. Les tegneserien tre ganger",
@@ -42,9 +42,9 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/0-uke_46_1.pdf",
-    "today_day": "mandag",
-    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Få underskrift i Flaskepostboka Øv på 2-10 gangen, bruk arket eller øv på gangesanger på youtube. Fokuser på de som du synes er vanskeligst.",
-    "next_day": "tirsdag",
-    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 40 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 87 i Norsk lesebok to ganger sammen med en voksen hjemme. Øv på stemmebruk, hvordan skal du bruke den, når skal du ha pauser i lesingen."
+    "today_day": "tirsdag",
+    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 40 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 87 i Norsk lesebok to ganger sammen med en voksen hjemme. Øv på stemmebruk, hvordan skal du bruke den, når skal du ha pauser i lesingen.",
+    "next_day": "onsdag",
+    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Øv på 2-10 gangen, bruk arket eller øv på gangesanger på youtube. Fokuser på de som du synes er vanskeligst."
   }
 }
