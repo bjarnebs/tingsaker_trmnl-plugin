@@ -1,11 +1,11 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-12T07:15+01:00",
+  "generated_at": "2026-11-13T07:13+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 46",
-    "today_day": "torsdag",
-    "today_homework": "Finn tre ting på t og tre ting på d og vis dem til en voksen hjemme.",
+    "today_day": "fredag",
+    "today_homework": "",
     "next_day": "helg",
     "next_homework": "",
     "homework": {
@@ -42,8 +42,8 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/0-uke_46_1.pdf",
-    "today_day": "torsdag",
-    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Øveark ord med sj-lyd som skrives med sk-.",
+    "today_day": "fredag",
+    "today_homework": "",
     "next_day": "helg",
     "next_homework": ""
   }
