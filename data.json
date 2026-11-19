@@ -1,12 +1,12 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-18T07:18+01:00",
+  "generated_at": "2026-11-19T07:15+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 47",
-    "today_day": "onsdag",
-    "today_homework": "Les siste arket i leksemappa, tegneserien. Les 2 ganger.",
-    "next_day": "torsdag",
+    "today_day": "torsdag",
+    "today_homework": "",
+    "next_day": "helg",
     "next_homework": "",
     "homework": {
       "mandag": "Gjør første side av arket som ligger i leksemappa. ● Bruk “lesefinger” og les bokstavene. Les 3 ganger og sett et kryss hver gang.",
@@ -42,9 +42,9 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/uke_47_docx_2.pdf",
-    "today_day": "onsdag",
-    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme.",
-    "next_day": "torsdag",
-    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Finskrift ord med kj- som skrives med kj-. Gjør matematikkarket du har fått utdelt."
+    "today_day": "torsdag",
+    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Finskrift ord med kj- som skrives med kj-. Gjør matematikkarket du har fått utdelt.",
+    "next_day": "helg",
+    "next_homework": ""
   }
 }
