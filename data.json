@@ -1,17 +1,17 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-21T14:29+01:00",
+  "generated_at": "2026-11-22T14:23+01:00",
   "grade_1": {
     "label": "1. klasse",
-    "week": "uke 47",
-    "today_day": "lørdag",
+    "week": "uke 48",
+    "today_day": "søndag",
     "today_homework": "Leksefri",
     "next_day": "helg",
     "next_homework": "",
     "homework": {
-      "mandag": "Gjør første side av arket som ligger i leksemappa. ● Bruk “lesefinger” og les bokstavene. Les 3 ganger og sett et kryss hver gang.",
-      "tirsdag": "Gjør andre side av arket som ligger i leksemappa.",
-      "onsdag": "Les siste arket i leksemappa, tegneserien. Les 2 ganger.",
+      "mandag": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
+      "tirsdag": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
+      "onsdag": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
       "torsdag": "",
       "fredag": ""
     },
@@ -22,16 +22,16 @@
       "torsdag": "",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/11/uke_47.pdf"
+    "source": "https://www.tingsakerskole.no/files/2026/11/uke_48.pdf"
   },
   "grade_4b": {
     "label": "4. klasse",
-    "week": "uke 47",
+    "week": "uke 48",
     "homework": {
-      "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Få underskrift i Flaskepostboka Gjør matematikkarket du har fått utdelt.",
-      "tirsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s.38 i engelskboka høyt for en voksen, prøv å oversette teksten. Les side 67 i Norsk arbeidsbok to ganger sammen med en voksen hjemme. Øv på stemmebruk.",
-      "onsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme.",
-      "torsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Finskrift ord med kj- som skrives med kj-. Gjør matematikkarket du har fått utdelt.",
+      "mandag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Få underskrift i Flaskepostboka Gjør s. 65 i Norsk arbeidsbok Gjør matematikkarket du har fått utdelt.",
+      "tirsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 70 i engelskboka høyt for en voksen, prøv å oversette teksten. Øv ekstra på glosene i den grønne ramma oppe til høyre på sida.",
+      "onsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Øv på sangtekstene til vinterfesten",
+      "torsdag": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Finskrift ord med kj-lyd som skrives med k. Gjør matematikkarket du har fått utdelt.",
       "fredag": ""
     },
     "reminders": {
@@ -41,8 +41,8 @@
       "torsdag": "",
       "fredag": ""
     },
-    "source": "https://www.tingsakerskole.no/files/2026/11/uke_47_docx_2.pdf",
-    "today_day": "lørdag",
+    "source": "https://www.tingsakerskole.no/files/2026/11/0-uke_48_1.pdf",
+    "today_day": "søndag",
     "today_homework": "",
     "next_day": "helg",
     "next_homework": ""
