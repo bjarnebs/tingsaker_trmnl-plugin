@@ -1,12 +1,12 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-23T17:00+01:00",
+  "generated_at": "2026-11-24T16:54+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 48",
-    "today_day": "mandag",
+    "today_day": "tirsdag",
     "today_homework": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
-    "next_day": "tirsdag",
+    "next_day": "onsdag",
     "next_homework": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
     "homework": {
       "mandag": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
@@ -42,9 +42,9 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/0-uke_48_1.pdf",
-    "today_day": "mandag",
-    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Få underskrift i Flaskepostboka Gjør s. 65 i Norsk arbeidsbok Gjør matematikkarket du har fått utdelt.",
-    "next_day": "tirsdag",
-    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 70 i engelskboka høyt for en voksen, prøv å oversette teksten. Øv ekstra på glosene i den grønne ramma oppe til høyre på sida."
+    "today_day": "tirsdag",
+    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Les s. 70 i engelskboka høyt for en voksen, prøv å oversette teksten. Øv ekstra på glosene i den grønne ramma oppe til høyre på sida.",
+    "next_day": "onsdag",
+    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Øv på sangtekstene til vinterfesten"
   }
 }
