@@ -1,12 +1,12 @@
 {
   "version": "3.7.0",
-  "generated_at": "2026-11-25T16:38+01:00",
+  "generated_at": "2026-11-27T16:08+01:00",
   "grade_1": {
     "label": "1. klasse",
     "week": "uke 48",
-    "today_day": "onsdag",
-    "today_homework": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
-    "next_day": "torsdag",
+    "today_day": "fredag",
+    "today_homework": "",
+    "next_day": "helg",
     "next_homework": "",
     "homework": {
       "mandag": "Jobb med arkene du har fått. (Egen mail om dette er sendt i visma)",
@@ -42,9 +42,9 @@
       "fredag": ""
     },
     "source": "https://www.tingsakerskole.no/files/2026/11/0-uke_48_1.pdf",
-    "today_day": "onsdag",
-    "today_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Øv på sangtekstene til vinterfesten",
-    "next_day": "torsdag",
-    "next_homework": "Les minst 15 minutter i bibliotekboka eller ei bok du har hjemme. Finskrift ord med kj-lyd som skrives med k. Gjør matematikkarket du har fått utdelt."
+    "today_day": "fredag",
+    "today_homework": "",
+    "next_day": "helg",
+    "next_homework": ""
   }
 }
